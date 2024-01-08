@@ -1,0 +1,763 @@
+edwards_addition ==============================================================
+
+inverted:add-2007-bl
+inverted:mmadd-2007-bl
+    - Assumptions:Z1 = 1
+    - Assumptions:Z2 = 1
+inverted:madd-2007-bl
+    - Assumptions:Z2 = 1
+inverted:madd-20080225-hwcd
+    - Assumptions:Z2 = 1
+inverted:xmadd-2007-bl
+    - Assumptions:X2 = 1
+inverted:add-20080225-hwcd
+
+Input: X1,Y1,Z1 X2,Y2,Z2
+Output: X3,Y3,Z3
+where Xi = Zi/xi, Yi = Zi/yi and xi^2+yi^2=c^2(1+dxi^2yi^2)
+
+CHANGES: put Zi=1 and invert, except for xmadd-2007-bl where we put Z1=1 and Z2=x2, Y2=x2/y2, Y1=1/y1,X1=1/x1
+
+-----------------------------
+projective:madd-2007-bl-3
+    - Assumptions:c2 = 2*c
+    - Assumptions:Z2 = 1
+projective:add-2007-bl-3
+    - Assumptions:c2 = 2*c
+projective:xmadd-2007-hcd
+    - Assumptions:X2 = 1
+projective:madd-2007-bl-2
+    - Assumptions:Z2 = 1
+projective:add-2007-bl
+projective:mmadd-2007-bl
+    - Assumptions:Z1 = 1
+    - Assumptions:Z2 = 1
+projective:madd-2007-bl
+    - Assumptions:Z2 = 1
+projective:add-2007-bl-2
+
+Input: X1,Y1,Z1 X2,Y2,Z2
+Output: X3,Y3,Z3
+where Xi = xi*Zi, Yi = Zi*yi and xi^2+yi^2=c^2(1+dxi^2yi^2)
+
+CHANGES: put Zi=1, except for xmadd-2007-hcd where we put Z1=1 and Z2=1/x2, Y2=y2/x2
+
+shortw_addition ==============================================================
+
+jacobian-3:madd
+    - Assumptions:Z2=1
+jacobian-3:zadd-2007-m
+    - Assumptions:Z1 = Z2
+jacobian-3:add-1998-cmo
+jacobian-3:madd-2004-hmv
+    - Assumptions:Z2=1
+jacobian-3:add-2007-bl
+jacobian-3:add-1998-cmo-2
+jacobian-3:mmadd-2007-bl
+    - Assumptions:Z1=1
+    - Assumptions:Z2=1
+jacobian-3:madd-2007-bl
+    - Assumptions:Z2=1
+jacobian-3:add-1986-cc
+jacobian-3:add-2001-b
+jacobian-3:madd-2008-g
+    - Assumptions:Z2=1
+
+Input: X1,Y1,Z1 X2,Y2,Z2
+Output: X3,Y3,Z3
+where Xi = xi*Zi**2, Yi = yi*Zi**3 and yi**2=xi**3-3*xi+b
+
+
+CHANGES: put Zi=1
+
+-----------------------------
+modified:madd-2009-bl
+    - Assumptions:Z2 = 1
+modified:add-1998-cmo-2
+modified:add-2009-bl
+modified:mmadd-2009-bl
+    - Assumptions:Z1 = 1
+    - Assumptions:Z2 = 1
+
+Input: X1,Y1,Z1 X2,Y2,Z2, T1,T2
+Output: X3,Y3,Z3
+where Xi = xi*Zi**2, Yi = yi*Zi**3 and yi**2=xi**3+a*xi+b and Ti = a*Zi**4
+
+CHANGES: put Zi=1, and Ti=a (no need, Ti is used only for doubling)
+-----------------------------
+
+jacobian-0:madd
+    - Assumptions:Z2=1
+jacobian-0:zadd-2007-m
+    - Assumptions:Z1 = Z2
+jacobian-0:add-1998-cmo
+jacobian-0:madd-2004-hmv
+    - Assumptions:Z2=1
+jacobian-0:add-2007-bl
+jacobian-0:add-1998-cmo-2
+jacobian-0:mmadd-2007-bl
+    - Assumptions:Z1=1
+    - Assumptions:Z2=1
+jacobian-0:madd-2007-bl
+    - Assumptions:Z2=1
+jacobian-0:add-1986-cc
+jacobian-0:add-2001-b
+jacobian-0:madd-2008-g
+    - Assumptions:Z2=1
+
+Input: X1,Y1,Z1 X2,Y2,Z2
+Output: X3,Y3,Z3
+where Xi = xi*Zi**2, Yi = yi*Zi**3 and yi**2=xi**3+b
+
+CHANGES: put Zi=1
+
+-----------------------------
+w12-0:madd-2010-cln
+    - Assumptions:Z2 = 1
+w12-0:add-2010-cln
+
+Input: X1,Y1,Z1 X2,Y2,Z2
+Output: X3,Y3,Z3
+where Xi = xi*Zi, Yi = yi*Zi**2 and yi**2=xi**3+axi
+
+CHANGES: put Zi=1
+------------------------------
+projective:add-1998-cmo
+projective:add-2002-bj
+projective:add-2007-bl
+projective:add-1998-cmo-2
+projective:madd-1998-cmo
+    - Assumptions:Z2 = 1
+projective:add-2016-rcb
+projective:mmadd-1998-cmo
+    - Assumptions:Z1 = 1
+    - Assumptions:Z2 = 1
+
+Input: X1,Y1,Z1 X2,Y2,Z2
+Output: X3,Y3,Z3
+where Xi = xi*Zi, Yi = yi*Zi and yi**2=xi**3+axi+b
+
+CHANGES: put Zi=1
+-------------------------------
+xyzz-3:dbl-2008-s-1
+xyzz-3:dbl-2008-s-2
+xyzz-3:mdbl-2008-s-1
+    - Assumptions:ZZ1 = 1
+    - Assumptions:ZZZ1 = 1
+xyzz-3:mdbl-2008-s-2
+    - Assumptions:ZZ1 = 1
+    - Assumptions:ZZZ1 = 1
+
+
+Input: X1,Y1,ZZ1, ZZZ1, X2,Y2,ZZ2, ZZZ2
+Output: X3,Y3,ZZ3, ZZZ3
+where Xi = xi*ZZi, Yi = yi*ZZZi, ZZi**2=ZZZi**3 and yi**2=xi**3-3xi+b
+
+CHANGES: put ZZi=ZZZi=1
+
+-----------------------------
+jacobian:madd
+    - Assumptions:Z2=1
+jacobian:zadd-2007-m
+    - Assumptions:Z1 = Z2
+jacobian:add-1998-cmo
+jacobian:madd-2004-hmv
+    - Assumptions:Z2=1
+jacobian:add-2007-bl
+jacobian:add-1998-cmo-2
+jacobian:mmadd-2007-bl
+    - Assumptions:Z1=1
+    - Assumptions:Z2=1
+jacobian:madd-2007-bl
+    - Assumptions:Z2=1
+jacobian:add-1986-cc
+jacobian:add-2001-b
+jacobian:madd-2008-g
+    - Assumptions:Z2=1
+
+Input: X1,Y1,Z1 X2,Y2,Z2
+Output: X3,Y3,Z3
+where Xi = xi*Zi**2, Yi = yi*Zi**3 and yi**2=xi**3+a*xi+b
+
+CHANGES: Zi=1
+-----------------------------
+projective-3:add-1998-cmo
+projective-3:add-2002-bj
+projective-3:add-2007-bl
+projective-3:add-1998-cmo-2
+projective-3:madd-1998-cmo
+    - Assumptions:Z2 = 1
+projective-3:add-2016-rcb
+projective-3:mmadd-1998-cmo
+    - Assumptions:Z1 = 1
+    - Assumptions:Z2 = 1
+
+Input: X1,Y1,Z1 X2,Y2,Z2
+Output: X3,Y3,Z3
+where Xi = xi*Zi, Yi = yi*Zi and yi**2=xi**3-3xi+b
+
+CHANGES: put Zi=1
+------------------------------
+projective-1:add-1998-cmo
+projective-1:add-2002-bj
+projective-1:add-2002-bj-2
+projective-1:add-2007-bl
+projective-1:add-1998-cmo-2
+projective-1:madd-1998-cmo
+    - Assumptions:Z2 = 1
+projective-1:mmadd-1998-cmo
+    - Assumptions:Z1 = 1
+    - Assumptions:Z2 = 1
+
+Input: X1,Y1,Z1 X2,Y2,Z2
+Output: X3,Y3,Z3
+where Xi = xi*Zi, Yi = yi*Zi and yi**2=xi**3-xi+b
+
+CHANGES: put Zi=1
+-------------------------------
+xyzz:add-2008-s
+xyzz:madd-2008-s
+    - Assumptions:ZZ2 = 1
+    - Assumptions:ZZZ2 = 1
+xyzz:mmadd-2008-s
+    - Assumptions:ZZ1 = 1
+    - Assumptions:ZZZ1 = 1
+    - Assumptions:ZZ2 = 1
+    - Assumptions:ZZZ2 = 1
+
+Input: X1,Y1,ZZ1, ZZZ1, X2,Y2,ZZ2, ZZZ2
+Output: X3,Y3,ZZ3, ZZZ3
+where Xi = xi*ZZi, Yi = yi*ZZZi, ZZi**2=ZZZi**3 and yi**2=xi**3+axi+b
+
+CHANGES: put ZZi=ZZZi=1
+
+twisted_addition ================================================
+
+inverted:add-2008-bbjlp
+inverted:mmadd-2008-bbjlp
+    - Assumptions:Z1 = 1
+    - Assumptions:Z2 = 1
+inverted:madd-2008-bbjlp
+    - Assumptions:Z2 = 1
+
+Input: X1,Y1,Z1 X2,Y2,Z2
+Output: X3,Y3,Z3
+where Xi = Zi/xi, Yi = Zi/yi and a*xi^2+yi^2=1+dxi^2yi^2
+
+CHANGES: put Zi=1 and invert
+-------------------------------
+extended:mmadd-2008-hwcd-2
+    - Assumptions:Z1 = 1
+    - Assumptions:Z2 = 1
+extended:mmadd-2008-hwcd
+    - Assumptions:Z1 = 1
+    - Assumptions:Z2 = 1
+extended:add-2008-hwcd
+extended:add-2008-hwcd-2
+extended:madd-2008-hwcd
+    - Assumptions:Z2 = 1
+extended:madd-2008-hwcd-2
+    - Assumptions:Z2 = 1
+
+Input: X1,Y1,Z1 X2,Y2,Z2, T1,T2
+Output: X3,Y3,Z3, T3
+where Xi = Zi*xi, Yi = Zi*yi and a*xi^2+yi^2=1+dxi^2yi^2 and xi*yi*Zi=Ti
+
+CHANGES: put Zi=1 and Ti = xi*yi
+
+-------------------------------
+projective:add-2008-bbjlp
+projective:mmadd-2008-bbjlp
+    - Assumptions:Z1 = 1
+    - Assumptions:Z2 = 1
+projective:madd-2008-bbjlp
+    - Assumptions:Z2 = 1
+
+Input: X1,Y1,Z1 X2,Y2,Z2
+Output: X3,Y3,Z3
+where Xi = Zi*xi, Yi = Zi*yi and a*xi^2+yi^2=1+dxi^2yi^2
+
+CHANGES: put Zi=1
+
+-------------------------------
+extended-1:mmadd-2008-hwcd-3
+    - Assumptions:Z1 = 1
+    - Assumptions:Z2 = 1
+    - Assumptions:k = 2*d
+extended-1:mmadd-2008-hwcd-2
+    - Assumptions:Z1 = 1
+    - Assumptions:Z2 = 1
+extended-1:add-2008-hwcd-4
+extended-1:mmadd-2008-hwcd
+    - Assumptions:Z1 = 1
+    - Assumptions:Z2 = 1
+extended-1:mmadd-2008-hwcd-4
+    - Assumptions:Z1 = 1
+    - Assumptions:Z2 = 1
+extended-1:add-2008-hwcd-3
+    - Assumptions:k = 2*d
+extended-1:madd-2008-hwcd-3
+    - Assumptions:Z2 = 1
+    - Assumptions:k = 2*d
+extended-1:add-2008-hwcd
+extended-1:add-2008-hwcd-2
+extended-1:madd-2008-hwcd
+    - Assumptions:Z2 = 1
+extended-1:madd-2008-hwcd-4
+    - Assumptions:Z2 = 1
+extended-1:madd-2008-hwcd-2
+    - Assumptions:Z2 = 1
+
+Input: X1,Y1,Z1 X2,Y2,Z2, T1,T2
+Output: X3,Y3,Z3, T3
+where Xi = Zi*xi, Yi = Zi*yi and -xi^2+yi^2=1+dxi^2yi^2 and xi*yi*Zi=Ti
+
+CHANGES: put Zi=1 and Ti=xi*yi
+
+
+edwards_diffadd ===================================================
+
+yz:dadd-2006-g
+    - Assumptions:s = (1+r)/(1-r)
+yz:dadd-2006-g-2
+    - Assumptions:s = (1+r)/(1-r)
+yz:mdadd-2006-g-2
+    - Assumptions:s = (1+r)/(1-r)
+    - Assumptions:Z1 = 1
+
+Input: Y1,Z1,Y2,Z2,Y3,Z3
+Output: Y4,Z4
+where Yi = r*yi*Zi and xi^2+yi^2=c^2(1+dxi^2yi^2) and c=1 and d=r^2
+
+CHANGES: put Zi=1, Yi=r*yi and subtitute d=r^2, c=1
+
+-------------------------------
+
+yzsquared:dadd-2006-g
+    - Assumptions:s = (1+r)/(1-r)
+yzsquared:mdadd-2006-g
+    - Assumptions:Z1 = 1
+    - Assumptions:s = (1+r)/(1-r)
+
+Input: Y1,Z1,Y2,Z2,Y3,Z3
+Output: Y4,Z4
+where Yi = r*yi**2*Zi and xi^2+yi^2=c^2(1+dxi^2yi^2) and c=1 and d=r^2
+
+CHANGES: put Zi=1, Yi=r*yi**2 and subtitute d=r^2, c=1
+
+
+shortw_diffaddd ====================================================
+
+xz:mdadd-2002-bj
+    - Assumptions:Z1 = 1
+xz:mdadd-2002-it-3
+    - Assumptions:Z1 = 1
+xz:dadd-2002-it-2
+xz:dadd-2002-it-3
+xz:dadd-2002-it
+xz:mdadd-2002-it-2
+    - Assumptions:Z1 = 1
+xz:mdadd-2002-it-4
+    - Assumptions:Z1 = 1
+xz:mdadd-2002-bj-2
+    - Assumptions:Z1 = 1
+    - Assumptions:b4 = 4*b
+xz:mdadd-2002-it
+    - Assumptions:Z1 = 1
+xz:dadd-2002-it-4
+
+Input: X1,Z1,X2,Z2,X3,Z3
+Output: X4,Z4
+where xi=Xi/Zi and yi**2=xi**3+axi+b
+
+CHANGES: put Zi=1
+
+montgom_diffadd =====================================================
+
+xz:dadd-1987-m
+xz:dadd-1987-m-3
+xz:dadd-1987-m-2
+xz:mdadd-1987-m
+    - Assumptions:Z1 = 1
+
+Input: X1,Z1,X2,Z2,X3,Z3
+Output: X4,Z4
+where xi=Xi/Zi and b*yi**2=xi**3+axi**2+xi
+
+CHANGES: put Zi=1
+
+shortw_ladder =====================================================
+
+xz:mladd-2002-it-5
+    - Assumptions:Z1 = 1
+    - Assumptions:b4 = 4*b
+xz:mladd-2002-bj-2
+    - Assumptions:Z1 = 1
+    - Assumptions:b2 = 2*b
+    - Assumptions:b4 = 4*b
+xz:mladd-2002-it-3
+    - Assumptions:Z1 = 1
+    - Assumptions:b4 = 4*b
+xz:mladd-2002-it-4
+    - Assumptions:Z1 = 1
+    - Assumptions:b4 = 4*b
+xz:mladd-2002-it-2
+    - Assumptions:Z1 = 1
+xz:ladd-2002-it-2
+xz:ladd-2002-it
+xz:mladd-2002-it
+    - Assumptions:Z1 = 1
+xz:mladd-2002-bj
+    - Assumptions:Z1 = 1
+xz:ladd-2002-it-4
+    - Assumptions:b4 = 4*b
+xz:mladd-2002-bj-3
+    - Assumptions:Z1 = 1
+    - Assumptions:b2 = 2*b
+    - Assumptions:b4 = 4*b
+xz:ladd-2002-it-3
+    - Assumptions:b4 = 4*b
+
+Input: X1,Z1,X2,Z2, X3,Z3
+Output: X4,Z4, X5,Z5
+where xi=Xi/Zi and yi**2=xi**3+axi+b
+
+CHANGES: put Zi=1
+
+
+montgom_ladder ====================================================
+
+xz:ladd-1987-m-2
+    - Assumptions:a24 = (a+2)/4
+xz:mladd-1987-m
+    - Assumptions:Z1 = 1
+    - Assumptions:a24 = (a+2)/4
+xz:ladd-1987-m-3
+    - Assumptions:a24 = (a+2)/4
+xz:ladd-1987-m
+
+Input: X1,Z1,X2,Z2,X3,Z3
+Output: X4,Z4, X5,Z5
+where xi=Xi/Zi and b*yi**2=xi**3+axi**2+xi
+
+CHANGES: put Zi=1
+
+
+edwards_ladder ====================================================
+
+yz:mladd-2006-g-2
+    - Assumptions:s = (1+r)/(1-r)
+    - Assumptions:Z1 = 1
+yz:ladd-2006-g
+    - Assumptions:s = (1+r)/(1-r)
+yz:ladd-2006-g-2
+    - Assumptions:s = (1+r)/(1-r)
+
+
+Input: Y1,Z1,Y2,Z2,Y3,Z3
+Output: Y4,Z4, Y5, Z5
+where Yi = r*yi*Zi and xi^2+yi^2=c^2(1+dxi^2yi^2) and c=1 and d=r^2
+
+CHANGES: put Zi=1, Yi=r*yi and subtitute d=r^2, c=1
+
+-------------------------------
+
+yzsquared:mladd-2006-g-2
+    - Assumptions:Z1 = 1
+    - Assumptions:s = (1+r)/(1-r)
+yzsquared:ladd-2006-g
+    - Assumptions:s = (1+r)/(1-r)
+yzsquared:ladd-2006-g-2
+    - Assumptions:s = (1+r)/(1-r)
+yzsquared:mladd-2006-g
+    - Assumptions:Z1 = 1
+    - Assumptions:s = (1+r)/(1-r)
+
+Input: Y1,Z1,Y2,Z2,Y3,Z3
+Output: Y4,Z4, Y5, Z5
+where Yi = r*yi**2*Zi and xi^2+yi^2=c^2(1+dxi^2yi^2) and c=1 and d=r^2
+
+CHANGES: put Zi=1, Yi=r*yi**2 and subtitute d=r^2, c=1
+
+edwards_doubling ====================================================
+
+inverted:dbl-2007-bl
+    - Assumptions:ccd2 = 2*c*c*d
+inverted:mdbl-2007-bl
+    - Assumptions:ccd2 = 2*c*c*d
+    - Assumptions:Z1 = 1
+
+Input: X1,Y1,Z1
+Output: X2,Y2,Z2
+where Xi = Zi/xi, Yi = Zi/yi and xi^2+yi^2=c^2(1+dxi^2yi^2)
+
+CHANGES: put Zi=1 and invert
+
+-------------------------------
+
+projective:dbl-2007-bl
+projective:mdbl-2007-bl
+    - Assumptions:cc2 = 2*c*c
+    - Assumptions:Z1 = 1
+projective:dbl-2007-bl-3
+projective:dbl-2007-bl-2
+
+Input: X1,Y1,Z1
+Output: X2,Y2,Z2
+where Xi = xi*Zi, Yi = Zi*yi and xi^2+yi^2=c^2(1+dxi^2yi^2)
+
+CHANGES: put Zi=1
+
+-------------------------------
+
+yzsquared:dbl-2006-g
+    - Assumptions:s = (1+r)/(1-r)
+yzsquared:mdbl-2006-g
+    - Assumptions:Z1 = 1
+    - Assumptions:s = (1+r)/(1-r)
+
+Input: Y1,Z1
+Output: Y2,Z2
+where Yi = r*yi**2*Zi and xi^2+yi^2=c^2(1+dxi^2yi^2) and c=1 and d=r^2
+
+CHANGES: put Zi=1, Yi=r*yi**2 and subtitute d=r^2, c=1
+
+
+-------------------------------
+
+yz:mdbl-2006-g-2
+    - Assumptions:s = (1+r)/(1-r)
+    - Assumptions:r2 = 2*r
+    - Assumptions:Z1 = 1
+yz:dbl-2006-g
+    - Assumptions:s = (1+r)/(1-r)
+yz:mdbl-2006-g-3
+    - Assumptions:s = (1+r)/(1-r)
+    - Assumptions:Z1 = 1
+yz:dbl-2006-g-2
+    - Assumptions:s = (1+r)/(1-r)
+
+
+Input: Y1,Z1
+Output: Y2,Z2
+where Yi = r*yi*Zi and xi^2+yi^2=c^2(1+dxi^2yi^2) and c=1 and d=r^2
+
+CHANGES: put Zi=1, Yi=r*yi and subtitute d=r^2, c=1
+
+montgom_doubling ====================================================
+
+xz:dbl-1987-m-2
+    - Assumptions:a24 = (a+2)/4
+xz:dbl-1987-m
+xz:dbl-1987-m-3
+    - Assumptions:a24 = (a+2)/4
+xz:mdbl-1987-m
+    - Assumptions:Z1 = 1
+
+Input: X1,Z1
+Output: X2,Z2
+where xi=Xi/Zi and b*yi**2=xi**3+axi**2+xi
+
+CHANGES: put Zi=1
+
+
+shortw_doubling ====================================================
+
+jacobian-3:dbl-2007-bl
+jacobian-3:dbl-1998-cmo-2
+jacobian-3:dbl-1998-cmo
+jacobian-3:mdbl-2007-bl
+    - Assumptions:Z1=1
+jacobian-3:dbl-2001-b
+jacobian-3:dbl-1986-cc-2
+jacobian-3:dbl-1986-cc
+
+Input: X1,Y1,Z1
+Output: X2,Y2,Z2
+where Xi = xi*Zi**2, Yi = yi*Zi**3 and yi**2=xi**3-3*xi+b
+
+CHANGES: put Zi=1
+
+-------------------------------
+
+modified:mdbl-2009-bl
+    - Assumptions:Z1 = 1
+modified:dbl-2009-bl
+modified:dbl-1998-cmo-2
+
+Input: X1,Y1,Z1, T1
+Output: X2,Y2,Z2, T2
+where Xi = xi*Zi**2, Yi = yi*Zi**3 and yi**2=xi**3+a*xi+b and Ti = a*Zi**4
+
+CHANGES: put Zi=1, and Ti=a
+
+-------------------------------
+jacobian-0:dbl-2007-bl
+jacobian-0:dbl-1998-cmo-2
+jacobian-0:dbl-1998-cmo
+jacobian-0:mdbl-2007-bl
+    - Assumptions:Z1=1
+jacobian-0:dbl-2009-l
+jacobian-0:dbl-2009-alnr
+jacobian-0:dbl-1986-cc
+
+Input: X1,Y1,Z1
+Output: X2,Y2,Z2
+where Xi = xi*Zi**2, Yi = yi*Zi**3 and yi**2=xi**3+b
+
+CHANGES: put Zi=1
+-------------------------------
+
+w12-0:dbl-2010-cln
+
+Input: X1,Y1,Z1
+Output: X2,Y2,Z2
+where Xi = xi*Zi, Yi = yi*Zi**2 and yi**2=xi**3+axi
+
+CHANGES: put Zi=1
+-------------------------------
+
+projective:dbl-2007-bl
+projective:dbl-1998-cmo-2
+projective:dbl-2016-rcb
+projective:dbl-1998-cmo
+projective:mdbl-2007-bl
+    - Assumptions:Z1 = 1
+
+
+Input: X1,Y1,Z1
+Output: X2,Y2,Z2
+where Xi = xi*Zi, Yi = Zi*yi and xi^2+yi^2=c^2(1+dxi^2yi^2)
+
+CHANGES: put Zi=1
+
+-------------------------------
+xyzz-3:dbl-2008-s-1
+xyzz-3:dbl-2008-s-2
+xyzz-3:mdbl-2008-s-1
+    - Assumptions:ZZ1 = 1
+    - Assumptions:ZZZ1 = 1
+xyzz-3:mdbl-2008-s-2
+    - Assumptions:ZZ1 = 1
+    - Assumptions:ZZZ1 = 1
+
+Input: X1,Y1,ZZ1, ZZZ1
+Output: X2,Y2,ZZ2, ZZZ2
+where Xi = xi*ZZi, Yi = yi*ZZZi, Zi=ZZZi**3 and yi**2=xi**3-3xi+b
+
+CHANGES: put ZZi=ZZZi=1
+
+-------------------------------
+jacobian:dbl-2007-bl
+jacobian:dbl-1998-cmo-2
+jacobian:dbl-1998-cmo
+jacobian:mdbl-2007-bl
+    - Assumptions:Z1=1
+jacobian:dbl-1986-cc
+
+Input: X1,Y1,Z1
+Output: X2,Y2,Z2
+where Xi = xi*Zi**2, Yi = yi*Zi**3 and yi**2=xi**3+a*xi+b
+
+CHANGES: Zi=1
+-------------------------------
+projective-3:dbl-2007-bl
+projective-3:dbl-1998-cmo-2
+projective-3:dbl-2016-rcb
+projective-3:dbl-1998-cmo
+projective-3:mdbl-2007-bl
+    - Assumptions:Z1 = 1
+projective-3:dbl-2007-bl-2
+
+Input: X1,Y1,Z1
+Output: X2,Y2,Z2
+where Xi = xi*Zi, Yi = yi*Zi and yi**2=xi**3-3xi+b
+
+CHANGES: put Zi=1
+-------------------------------
+
+projective-1:dbl-2007-bl
+projective-1:dbl-1998-cmo-2
+projective-1:dbl-1998-cmo
+projective-1:mdbl-2007-bl
+    - Assumptions:Z1 = 1
+
+Input: X1,Y1,Z1
+Output: X2,Y2,Z2
+where Xi = xi*Zi, Yi = yi*Zi and yi**2=xi**3-xi+b
+
+CHANGES: put Zi=1
+
+-------------------------------
+xyzz:dbl-2008-s-1
+xyzz:mdbl-2008-s-1
+    - Assumptions:ZZ1 = 1
+    - Assumptions:ZZZ1 = 1
+
+Input: X1,Y1,ZZ1, ZZZ1
+Output: X2,Y2,ZZ2, ZZZ2
+where Xi = xi*ZZi, Yi = yi*ZZZi, Zi=ZZZi**3 and yi**2=xi**3+axi+b
+
+CHANGES: put ZZi=ZZZi=1
+-------------------------------
+xz:dbl-2002-bj-2
+    - Assumptions:b2 = 2*b
+xz:dbl-2002-bj
+xz:dbl-2002-it
+xz:dbl-2002-bj-3
+    - Assumptions:b2 = 2*b
+    - Assumptions:b4 = 4*b
+xz:dbl-2002-it-2
+
+Input: X1,Z1
+Output: X2,Z2
+where xi=Xi/Zi and yi**2=xi**3+axi+b
+
+CHANGES: put Zi=1
+
+twisted_doubling ====================================================
+
+inverted:mdbl-2008-bbjlp
+    - Assumptions:Z1 = 1
+    - Assumptions:d2 = 2*d
+inverted:dbl-2008-bbjlp
+    - Assumptions:d2 = 2*d
+
+Input: X1,Y1,Z1
+Output: X2,Y2,Z2
+where Xi = Zi/xi, Yi = Zi/yi and a*xi^2+yi^2=1+dxi^2yi^2
+
+CHANGES: put Zi=1 and invert
+
+-------------------------------
+extended:mdbl-2008-hwcd
+    - Assumptions:Z1 = 1
+extended:dbl-2008-hwcd
+
+Input: X1,Y1,Z1, T1
+Output: X2,Y2,Z2, T2
+where Xi = Zi*xi, Yi = Zi*yi and a*xi^2+yi^2=1+dxi^2yi^2 and xi*yi*Zi=Ti
+
+CHANGES: put Zi=1 and Ti=xi*yi
+-------------------------------
+
+projective:mdbl-2008-bbjlp
+    - Assumptions:Z1 = 1
+projective:dbl-2008-bbjlp
+
+Input: X1,Y1,Z1
+Output: X2,Y2,Z2
+where Xi = xi/Zi, Yi = yi/Zi and a*xi^2+yi^2=1+dxi^2yi^2
+
+CHANGES: put Zi=1
+
+-------------------------------
+extended-1:mdbl-2008-hwcd
+    - Assumptions:Z1 = 1
+extended-1:dbl-2008-hwcd
+
+Input: X1,Y1,Z1,T1
+Output: X2,Y2,Z2,T2
+where Xi = Zi*xi, Yi = Zi*yi and -xi^2+yi^2=1+dxi^2yi^2 and xi*yi*Zi=Ti
+
+CHANGES: put Zi=1 and Ti=xi*yi

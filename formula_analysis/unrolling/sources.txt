@@ -1,0 +1,693 @@
+###### edwards diffadd 
+ yz mdadd-2006-g-2 2006 Gaudry "Variants of the Montgomery form based on Theta functions", page 23/52, with A^2/B^2 = (a^2+b^2)/(a^2-b^2) as on page 20/52, replacing incorrect B^2/A^2 on page 23/52 with correct A^2/B^2 and a/b; or 2009 Gaudry--Lubicz "The arithmetic of characteristic 2 Kummer surfaces and of elliptic Kummer lines", Section 6.2, replacing incorrect A'/B' = (a^2+b^2)/(a^2-b^2) with correct A'^2/B'^2 = (a^2+b^2)/(a^2-b^2), replacing A'^2/B'^2 with A^2/B^2, and replacing z... with y...; plus notation changes: a/b and A^2/B^2 defined as 1/sqrt(r) and (1+r)/(1-r), input x^2/y^2 etc. replaced by r Z2^2/Y2^2 and r Z3^2/Y3^2 and r Z1^2/Y1^2, intermediate x'/y' replaced by W/V, output X/Y replaced by sqrt(r) Z5/Y5; plus common-subexpression elimination; plus assumption Z1=1
+
+###### edwards diffadd 
+ yz dadd-2006-g 2006 Gaudry "Variants of the Montgomery form based on Theta functions", page 23/52, with A^2/B^2 = (a^2+b^2)/(a^2-b^2) as on page 20/52, replacing incorrect B^2/A^2 on page 23/52 with correct A^2/B^2 and a/b; or 2009 Gaudry--Lubicz "The arithmetic of characteristic 2 Kummer surfaces and of elliptic Kummer lines", Section 6.2, replacing incorrect A'/B' = (a^2+b^2)/(a^2-b^2) with correct A'^2/B'^2 = (a^2+b^2)/(a^2-b^2), replacing A'^2/B'^2 with A^2/B^2, and replacing z... with y...; plus notation changes: a/b and A^2/B^2 defined as 1/sqrt(r) and (1+r)/(1-r), input x^2/y^2 etc. replaced by r Z2^2/Y2^2 and r Z3^2/Y3^2 and r Z1^2/Y1^2, intermediate x'/y' replaced by W/V, output X/Y replaced by sqrt(r) Z5/Y5
+
+###### edwards diffadd 
+ yz dadd-2006-g-2 2006 Gaudry "Variants of the Montgomery form based on Theta functions", page 23/52, with A^2/B^2 = (a^2+b^2)/(a^2-b^2) as on page 20/52, replacing incorrect B^2/A^2 on page 23/52 with correct A^2/B^2 and a/b; or 2009 Gaudry--Lubicz "The arithmetic of characteristic 2 Kummer surfaces and of elliptic Kummer lines", Section 6.2, replacing incorrect A'/B' = (a^2+b^2)/(a^2-b^2) with correct A'^2/B'^2 = (a^2+b^2)/(a^2-b^2), replacing A'^2/B'^2 with A^2/B^2, and replacing z... with y...; plus notation changes: a/b and A^2/B^2 defined as 1/sqrt(r) and (1+r)/(1-r), input x^2/y^2 etc. replaced by r Z2^2/Y2^2 and r Z3^2/Y3^2 and r Z1^2/Y1^2, intermediate x'/y' replaced by W/V, output X/Y replaced by sqrt(r) Z5/Y5; plus common-subexpression elimination
+
+###### edwards doubling 
+ yz mdbl-2006-g-3 2006 Gaudry "Variants of the Montgomery form based on Theta functions", page 22/52, with A^2/B^2 = (a^2+b^2)/(a^2-b^2) as on page 20/52, replacing incorrect B^2/A^2 and b/a on page 22/52 with correct A^2/B^2 and a/b; or 2009 Gaudry--Lubicz "The arithmetic of characteristic 2 Kummer surfaces and of elliptic Kummer lines", Section 6.2, replacing incorrect A'/B' = (a^2+b^2)/(a^2-b^2) with correct A'^2/B'^2 = (a^2+b^2)/(a^2-b^2), replacing A'^2/B'^2 with A^2/B^2, and replacing z... with y...; plus notation changes: a/b and A^2/B^2 defined as 1/sqrt(r) and (1+r)/(1-r), input x^2/y^2 replaced by r Z1^2/Y1^2, intermediate x'/y' replaced by W/V, output X/Y replaced by sqrt(r) Z3/Y3; plus common-subexpression elimination; plus assumption Z1=1; plus standard simplification
+
+###### edwards doubling 
+ yz mdbl-2006-g-2 2006 Gaudry "Variants of the Montgomery form based on Theta functions", page 22/52, with A^2/B^2 = (a^2+b^2)/(a^2-b^2) as on page 20/52, replacing incorrect B^2/A^2 and b/a on page 22/52 with correct A^2/B^2 and a/b; or 2009 Gaudry--Lubicz "The arithmetic of characteristic 2 Kummer surfaces and of elliptic Kummer lines", Section 6.2, replacing incorrect A'/B' = (a^2+b^2)/(a^2-b^2) with correct A'^2/B'^2 = (a^2+b^2)/(a^2-b^2), replacing A'^2/B'^2 with A^2/B^2, and replacing z... with y...; plus notation changes: a/b and A^2/B^2 defined as 1/sqrt(r) and (1+r)/(1-r), input x^2/y^2 replaced by r Z1^2/Y1^2, intermediate x'/y' replaced by W/V, output X/Y replaced by sqrt(r) Z3/Y3; plus common-subexpression elimination; plus assumption Z1=1; plus standard simplification
+
+###### edwards doubling 
+ yz dbl-2006-g 2006 Gaudry "Variants of the Montgomery form based on Theta functions", page 22/52, with A^2/B^2 = (a^2+b^2)/(a^2-b^2) as on page 20/52, replacing incorrect B^2/A^2 and b/a on page 22/52 with correct A^2/B^2 and a/b; or 2009 Gaudry--Lubicz "The arithmetic of characteristic 2 Kummer surfaces and of elliptic Kummer lines", Section 6.2, replacing incorrect A'/B' = (a^2+b^2)/(a^2-b^2) with correct A'^2/B'^2 = (a^2+b^2)/(a^2-b^2), replacing A'^2/B'^2 with A^2/B^2, and replacing z... with y...; plus notation changes: a/b and A^2/B^2 defined as 1/sqrt(r) and (1+r)/(1-r), input x^2/y^2 replaced by r Z1^2/Y1^2, intermediate x'/y' replaced by W/V, output X/Y replaced by sqrt(r) Z3/Y3
+
+###### edwards doubling 
+ yz dbl-2006-g-2 2006 Gaudry "Variants of the Montgomery form based on Theta functions", page 22/52, with A^2/B^2 = (a^2+b^2)/(a^2-b^2) as on page 20/52, replacing incorrect B^2/A^2 and b/a on page 22/52 with correct A^2/B^2 and a/b; or 2009 Gaudry--Lubicz "The arithmetic of characteristic 2 Kummer surfaces and of elliptic Kummer lines", Section 6.2, replacing incorrect A'/B' = (a^2+b^2)/(a^2-b^2) with correct A'^2/B'^2 = (a^2+b^2)/(a^2-b^2), replacing A'^2/B'^2 with A^2/B^2, and replacing z... with y...; plus notation changes: a/b and A^2/B^2 defined as 1/sqrt(r) and (1+r)/(1-r), input x^2/y^2 replaced by r Z1^2/Y1^2, intermediate x'/y' replaced by W/V, output X/Y replaced by sqrt(r) Z3/Y3; plus common-subexpression elimination
+
+###### edwards ladder 
+ yz mladd-2006-g-2 2006 Gaudry "Variants of the Montgomery form based on Theta functions", pages 22/52 and 23/52, with A^2/B^2 = (a^2+b^2)/(a^2-b^2) as on page 20/52, replacing incorrect B^2/A^2 and b/a on pages 22/52 and 23/52 with correct A^2/B^2 and a/b; or 2009 Gaudry--Lubicz "The arithmetic of characteristic 2 Kummer surfaces and of elliptic Kummer lines", Section 6.2, replacing incorrect A'/B' = (a^2+b^2)/(a^2-b^2) with correct A'^2/B'^2 = (a^2+b^2)/(a^2-b^2), replacing A'^2/B'^2 with A^2/B^2, and replacing z... with y...; plus notation changes: a/b and A^2/B^2 defined as 1/sqrt(r) and (1+r)/(1-r), input x^2/y^2 etc. replaced by r Z2^2/Y2^2 and r Z3^2/Y3^2 and r Z1^2/Y1^2, intermediate x'/y' replaced by W/V, output X/Y replaced by sqrt(r) Z5/Y5; plus common-subexpression elimination; plus assumption Z1=1
+
+###### edwards ladder 
+ yz ladd-2006-g 2006 Gaudry "Variants of the Montgomery form based on Theta functions", pages 22/52 and 23/52, with A^2/B^2 = (a^2+b^2)/(a^2-b^2) as on page 20/52, replacing incorrect B^2/A^2 and b/a on pages 22/52 and 23/52 with correct A^2/B^2 and a/b; or 2009 Gaudry--Lubicz "The arithmetic of characteristic 2 Kummer surfaces and of elliptic Kummer lines", Section 6.2, replacing incorrect A'/B' = (a^2+b^2)/(a^2-b^2) with correct A'^2/B'^2 = (a^2+b^2)/(a^2-b^2), replacing A'^2/B'^2 with A^2/B^2, and replacing z... with y...; plus notation changes: a/b and A^2/B^2 defined as 1/sqrt(r) and (1+r)/(1-r), input x^2/y^2 etc. replaced by r Z2^2/Y2^2 and r Z3^2/Y3^2 and r Z1^2/Y1^2, intermediate x'/y' replaced by W/V, output X/Y replaced by sqrt(r) Z5/Y5
+
+###### edwards ladder 
+ yz ladd-2006-g-2 2006 Gaudry "Variants of the Montgomery form based on Theta functions", pages 22/52 and 23/52, with A^2/B^2 = (a^2+b^2)/(a^2-b^2) as on page 20/52, replacing incorrect B^2/A^2 and b/a on pages 22/52 and 23/52 with correct A^2/B^2 and a/b; or 2009 Gaudry--Lubicz "The arithmetic of characteristic 2 Kummer surfaces and of elliptic Kummer lines", Section 6.2, replacing incorrect A'/B' = (a^2+b^2)/(a^2-b^2) with correct A'^2/B'^2 = (a^2+b^2)/(a^2-b^2), replacing A'^2/B'^2 with A^2/B^2, and replacing z... with y...; plus notation changes: a/b and A^2/B^2 defined as 1/sqrt(r) and (1+r)/(1-r), input x^2/y^2 etc. replaced by r Z2^2/Y2^2 and r Z3^2/Y3^2 and r Z1^2/Y1^2, intermediate x'/y' replaced by W/V, output X/Y replaced by sqrt(r) Z5/Y5; plus common-subexpression elimination
+
+###### edwards doubling 
+ projective dbl-2007-bl-3 2007 Bernstein--Lange;
+
+###### edwards doubling 
+ projective dbl-2007-bl 2007 Bernstein--Lange
+
+###### edwards doubling 
+ projective dbl-2007-bl-2 2007 Bernstein--Lange;
+
+###### edwards doubling 
+ projective mdbl-2007-bl 2007 Bernstein--Lange
+
+###### edwards addition 
+ projective xmadd-2007-hcd 2007 Hisil--Carter--Dawson
+
+###### edwards addition 
+ projective add-20090311-hwcd 2009.03.11 Hisil--Wong--Carter--Dawson, after formula (17), plus denominator elimination
+
+###### edwards addition 
+ projective add-2007-bl-3 2007 Bernstein--Lange
+
+###### edwards addition 
+ projective add-2007-bl-2 2007 Bernstein--Lange
+
+###### edwards addition 
+ projective add-20080225-hwcd Faster Group Operations on Elliptic Curves (Hisil--Wong--Carter--Dawson): https://eprints.qut.edu.au/27634/1/27634_hisil_2010000583.pdf, page 6
+
+###### edwards addition 
+ projective madd-20080225-hwcd Faster Group Operations on Elliptic Curves (Hisil--Wong--Carter--Dawson): https://eprints.qut.edu.au/27634/1/27634_hisil_2010000583.pdf, page 6
+
+###### edwards addition 
+ projective madd-2007-bl-2 2007 Bernstein--Lange
+
+###### edwards addition 
+ projective add-2007-bl-4 2007 Bernstein--Lange
+
+###### edwards addition 
+ projective add-2007-bl 2007 Bernstein--Lange
+
+###### edwards addition 
+ projective madd-2007-bl 2007 Bernstein--Lange
+
+###### edwards addition 
+ projective mmadd-2007-bl 2007 Bernstein--Lange
+
+###### edwards addition 
+ projective madd-2007-bl-3 2007 Bernstein--Lange
+
+###### edwards doubling 
+ inverted dbl-2007-bl 2007 Bernstein--Lange
+
+###### edwards doubling 
+ inverted mdbl-2007-bl 2007 Bernstein--Lange
+
+###### edwards addition 
+ inverted xmadd-2007-bl 2007 Bernstein--Lange
+
+###### edwards addition 
+ inverted add-20080225-hwcd Faster Group Operations on Elliptic Curves (Hisil--Wong--Carter--Dawson): https://eprints.qut.edu.au/27634/1/27634_hisil_2010000583.pdf, page 7
+
+###### edwards addition 
+ inverted madd-20080225-hwcd Faster Group Operations on Elliptic Curves (Hisil--Wong--Carter--Dawson): https://eprints.qut.edu.au/27634/1/27634_hisil_2010000583.pdf, page 7
+
+###### edwards addition 
+ inverted add-2007-bl 2007 Bernstein--Lange
+
+###### edwards addition 
+ inverted madd-2007-bl 2007 Bernstein--Lange
+
+###### edwards addition 
+ inverted mmadd-2007-bl 2007 Bernstein--Lange
+
+###### edwards diffadd 
+ yzsquared mdadd-2006-g 2006 Gaudry "Variants of the Montgomery form based on Theta functions", page 23/52, with A^2/B^2 = (a^2+b^2)/(a^2-b^2) as on page 20/52, replacing incorrect B^2/A^2 on page 23/52 with correct A^2/B^2 and a/b; or 2009 Gaudry--Lubicz "The arithmetic of characteristic 2 Kummer surfaces and of elliptic Kummer lines", Section 6.2, replacing incorrect A'/B' = (a^2+b^2)/(a^2-b^2) with correct A'^2/B'^2 = (a^2+b^2)/(a^2-b^2), replacing A'^2/B'^2 with A^2/B^2, and replacing z... with y...; plus notation changes: a/b and A^2/B^2 defined as 1/sqrt(r) and (1+r)/(1-r), input x^2/y^2 etc. replaced by Z2/Y2 and Z3/Y3 and Z1/Y1, intermediate x'/y' replaced by W/V, output X^2/Y^2 replaced by Z5/Y5; plus assumption Z1=1
+
+###### edwards diffadd 
+ yzsquared dadd-2006-g 2006 Gaudry "Variants of the Montgomery form based on Theta functions", page 23/52, with A^2/B^2 = (a^2+b^2)/(a^2-b^2) as on page 20/52, replacing incorrect B^2/A^2 on page 23/52 with correct A^2/B^2 and a/b; or 2009 Gaudry--Lubicz "The arithmetic of characteristic 2 Kummer surfaces and of elliptic Kummer lines", Section 6.2, replacing incorrect A'/B' = (a^2+b^2)/(a^2-b^2) with correct A'^2/B'^2 = (a^2+b^2)/(a^2-b^2), replacing A'^2/B'^2 with A^2/B^2, and replacing z... with y...; plus notation changes: a/b and A^2/B^2 defined as 1/sqrt(r) and (1+r)/(1-r), input x^2/y^2 etc. replaced by Z2/Y2 and Z3/Y3 and Z1/Y1, intermediate x'/y' replaced by W/V, output X^2/Y^2 replaced by Z5/Y5
+
+###### edwards doubling 
+ yzsquared mdbl-2006-g 2006 Gaudry "Variants of the Montgomery form based on Theta functions", page 22/52, with A^2/B^2 = (a^2+b^2)/(a^2-b^2) as on page 20/52, replacing incorrect B^2/A^2 and b/a on page 22/52 with correct A^2/B^2 and a/b; or 2009 Gaudry--Lubicz "The arithmetic of characteristic 2 Kummer surfaces and of elliptic Kummer lines", Section 6.2, replacing incorrect A'/B' = (a^2+b^2)/(a^2-b^2) with correct A'^2/B'^2 = (a^2+b^2)/(a^2-b^2), replacing A'^2/B'^2 with A^2/B^2, and replacing z... with y...; plus notation changes: a/b and A^2/B^2 defined as 1/sqrt(r) and (1+r)/(1-r), input x^2/y^2 replaced by Z1/Y1, intermediate x'/y' replaced by W/V, output X^2/Y^2 replaced by Z3/Y3; plus assumption Z1=1; plus standard simplification
+
+###### edwards doubling 
+ yzsquared dbl-2006-g 2006 Gaudry "Variants of the Montgomery form based on Theta functions", page 22/52, with A^2/B^2 = (a^2+b^2)/(a^2-b^2) as on page 20/52, replacing incorrect B^2/A^2 and b/a on page 22/52 with correct A^2/B^2 and a/b; or 2009 Gaudry--Lubicz "The arithmetic of characteristic 2 Kummer surfaces and of elliptic Kummer lines", Section 6.2, replacing incorrect A'/B' = (a^2+b^2)/(a^2-b^2) with correct A'^2/B'^2 = (a^2+b^2)/(a^2-b^2), replacing A'^2/B'^2 with A^2/B^2, and replacing z... with y...; plus notation changes: a/b and A^2/B^2 defined as 1/sqrt(r) and (1+r)/(1-r), input x^2/y^2 replaced by Z1/Y1, intermediate x'/y' replaced by W/V, output X^2/Y^2 replaced by Z3/Y3
+
+###### edwards ladder 
+ yzsquared mladd-2006-g 2006 Gaudry "Variants of the Montgomery form based on Theta functions", pages 22/52 and 23/52, with A^2/B^2 = (a^2+b^2)/(a^2-b^2) as on page 20/52, replacing incorrect B^2/A^2 on pages 22/52 and 23/52 with correct A^2/B^2 and a/b; or 2009 Gaudry--Lubicz "The arithmetic of characteristic 2 Kummer surfaces and of elliptic Kummer lines", Section 6.2, replacing incorrect A'/B' = (a^2+b^2)/(a^2-b^2) with correct A'^2/B'^2 = (a^2+b^2)/(a^2-b^2), replacing A'^2/B'^2 with A^2/B^2, and replacing z... with y...; plus notation changes: a/b and A^2/B^2 defined as 1/sqrt(r) and (1+r)/(1-r), input x^2/y^2 etc. replaced by Z2/Y2 and Z3/Y3 and Z1/Y1, intermediate x'/y' replaced by W/V, output X^2/Y^2 replaced by Z5/Y5; plus assumption Z1=1
+
+###### edwards ladder 
+ yzsquared mladd-2006-g-2 2006 Gaudry "Variants of the Montgomery form based on Theta functions", pages 22/52 and 23/52, with A^2/B^2 = (a^2+b^2)/(a^2-b^2) as on page 20/52, replacing incorrect B^2/A^2 on pages 22/52 and 23/52 with correct A^2/B^2 and a/b; or 2009 Gaudry--Lubicz "The arithmetic of characteristic 2 Kummer surfaces and of elliptic Kummer lines", Section 6.2, replacing incorrect A'/B' = (a^2+b^2)/(a^2-b^2) with correct A'^2/B'^2 = (a^2+b^2)/(a^2-b^2), replacing A'^2/B'^2 with A^2/B^2, and replacing z... with y...; plus notation changes: a/b and A^2/B^2 defined as 1/sqrt(r) and (1+r)/(1-r), input x^2/y^2 etc. replaced by Z2/Y2 and Z3/Y3 and Z1/Y1, intermediate x'/y' replaced by W/V, output X^2/Y^2 replaced by Z5/Y5; plus common-subexpression elimination; plus assumption Z1=1
+
+###### edwards ladder 
+ yzsquared ladd-2006-g 2006 Gaudry "Variants of the Montgomery form based on Theta functions", pages 22/52 and 23/52, with A^2/B^2 = (a^2+b^2)/(a^2-b^2) as on page 20/52, replacing incorrect B^2/A^2 on pages 22/52 and 23/52 with correct A^2/B^2 and a/b; or 2009 Gaudry--Lubicz "The arithmetic of characteristic 2 Kummer surfaces and of elliptic Kummer lines", Section 6.2, replacing incorrect A'/B' = (a^2+b^2)/(a^2-b^2) with correct A'^2/B'^2 = (a^2+b^2)/(a^2-b^2), replacing A'^2/B'^2 with A^2/B^2, and replacing z... with y...; plus notation changes: a/b and A^2/B^2 defined as 1/sqrt(r) and (1+r)/(1-r), input x^2/y^2 etc. replaced by Z2/Y2 and Z3/Y3 and Z1/Y1, intermediate x'/y' replaced by W/V, output X^2/Y^2 replaced by Z5/Y5
+
+###### edwards ladder 
+ yzsquared ladd-2006-g-2 2006 Gaudry "Variants of the Montgomery form based on Theta functions", pages 22/52 and 23/52, with A^2/B^2 = (a^2+b^2)/(a^2-b^2) as on page 20/52, replacing incorrect B^2/A^2 on pages 22/52 and 23/52 with correct A^2/B^2 and a/b; or 2009 Gaudry--Lubicz "The arithmetic of characteristic 2 Kummer surfaces and of elliptic Kummer lines", Section 6.2, replacing incorrect A'/B' = (a^2+b^2)/(a^2-b^2) with correct A'^2/B'^2 = (a^2+b^2)/(a^2-b^2), replacing A'^2/B'^2 with A^2/B^2, and replacing z... with y...; plus notation changes: a/b and A^2/B^2 defined as 1/sqrt(r) and (1+r)/(1-r), input x^2/y^2 etc. replaced by Z2/Y2 and Z3/Y3 and Z1/Y1, intermediate x'/y' replaced by W/V, output X^2/Y^2 replaced by Z5/Y5; plus common-subexpression elimination
+
+###### montgom diffadd 
+ xz dadd-1987-m-2 1987 Montgomery "Speeding the Pollard and elliptic curve methods of factorization", page 261, fifth display
+
+###### montgom diffadd 
+ xz dadd-1987-m-3 1987 Montgomery "Speeding the Pollard and elliptic curve methods of factorization", page 261, fifth display, plus common-subexpression elimination
+
+###### montgom diffadd 
+ xz dadd-1987-m 1987 Montgomery "Speeding the Pollard and elliptic curve methods of factorization", page 261, third display
+
+###### montgom diffadd 
+ xz mdadd-1987-m 1987 Montgomery "Speeding the Pollard and elliptic curve methods of factorization", page 261, fifth display, plus common-subexpression elimination, plus assumption Z1=1
+
+###### montgom doubling 
+ xz dbl-1987-m 1987 Montgomery "Speeding the Pollard and elliptic curve methods of factorization", page 261, fourth display
+
+###### montgom doubling 
+ xz mdbl-1987-m 1987 Montgomery "Speeding the Pollard and elliptic curve methods of factorization", page 261, fourth display, plus assumption Z1=1, plus common-subexpression elimination
+
+###### montgom doubling 
+ xz dbl-1987-m-3 1987 Montgomery "Speeding the Pollard and elliptic curve methods of factorization", page 261, sixth display, plus common-subexpression elimination
+
+###### montgom doubling 
+ xz dbl-1987-m-2 1987 Montgomery "Speeding the Pollard and elliptic curve methods of factorization", page 261, sixth display
+
+###### montgom ladder 
+ xz mladd-1987-m 1987 Montgomery "Speeding the Pollard and elliptic curve methods of factorization", page 261, fifth and sixth displays, plus common-subexpression elimination, plus assumption Z1=1
+
+###### montgom ladder 
+ xz ladd-1987-m-3 1987 Montgomery "Speeding the Pollard and elliptic curve methods of factorization", page 261, fifth and sixth displays, plus common-subexpression elimination
+
+###### montgom ladder 
+ xz ladd-1987-m-2 1987 Montgomery "Speeding the Pollard and elliptic curve methods of factorization", page 261, fifth and sixth displays
+
+###### montgom ladder 
+ xz ladd-1987-m 1987 Montgomery "Speeding the Pollard and elliptic curve methods of factorization", page 261, third and fourth displays
+
+###### shortw doubling 
+ jacobian-0 dbl-1986-cc 1986 Chudnovsky--Chudnovsky "Sequences of numbers generated by addition in formal groups and new primality and factorization tests", page 414, formula (4.2ii)
+
+###### shortw doubling 
+ jacobian-0 dbl-1998-hnm 1998 Hasegawa--Nakajima--Matsui, page 188
+
+###### shortw doubling 
+ jacobian-0 dbl-2007-bl 2007 Bernstein--Lange
+
+###### shortw doubling 
+ jacobian-0 dbl-2009-l 2009.04.01 Lange
+
+###### shortw doubling 
+ jacobian-0 dbl-1998-cmo-2 1998 Cohen--Miyaji--Ono "Efficient elliptic curve exponentiation using mixed coordinates", formula (6), plus common-subexpression elimination
+
+###### shortw doubling 
+ jacobian-0 mdbl-2007-bl 2007 Bernstein--Lange
+
+###### shortw doubling 
+ jacobian-0 dbl-1998-cmo 1998 Cohen--Miyaji--Ono "Efficient elliptic curve exponentiation using mixed coordinates", formula (6)
+
+###### shortw doubling 
+ jacobian-0 dbl-2009-alnr 2009.04.01 Arene--Lange--Naehrig--Ritzenthaler
+
+###### shortw addition 
+ jacobian-0 add-1998-cmo-2 1998 Cohen--Miyaji--Ono "Efficient elliptic curve exponentiation using mixed coordinates", formula (5), plus common-subexpression elimination
+
+###### shortw addition 
+ jacobian-0 madd-2008-g 2008 Giessmann
+
+###### shortw addition 
+ jacobian-0 add-1998-cmo 1998 Cohen--Miyaji--Ono "Efficient elliptic curve exponentiation using mixed coordinates", formula (5)
+
+###### shortw addition 
+ jacobian-0 madd None
+
+###### shortw addition 
+ jacobian-0 add-1998-hnm 1998 Hasegawa--Nakajima--Matsui, page 188
+
+###### shortw addition 
+ jacobian-0 madd-2004-hmv 2004 Hankerson--Menezes--Vanstone, page 91
+
+###### shortw addition 
+ jacobian-0 add-1986-cc 1986 Chudnovsky--Chudnovsky "Sequences of numbers generated by addition in formal groups and new primality and factorization tests", page 414, formula (4.3i)
+
+###### shortw addition 
+ jacobian-0 zadd-2007-m 2007 Meloni "New point addition formulae for ECC applications", page 192
+
+###### shortw addition 
+ jacobian-0 add-2001-b 2001 Bernstein http://cr.yp.to/nistp224.html opt-idea53.c ecadd
+
+###### shortw addition 
+ jacobian-0 add-2007-bl 2007 Bernstein--Lange; note that the improvement from 12M+4S to 11M+5S was already mentioned in 2001 Bernstein http://cr.yp.to/talks.html#2001.10.29
+
+###### shortw addition 
+ jacobian-0 madd-2007-bl 2007 Bernstein--Lange
+
+###### shortw addition 
+ jacobian-0 mmadd-2007-bl 2007 Bernstein--Lange
+
+###### shortw doubling 
+ w12-0 dbl-2010-cln 2010 Costello--Lange--Naehrig
+
+###### shortw addition 
+ w12-0 madd-2010-cln 2010 Costello--Lange--Naehrig
+
+###### shortw addition 
+ w12-0 add-2010-cln 2010 Costello--Lange--Naehrig
+
+###### shortw doubling 
+ projective-1 dbl-2007-bl 2007 Bernstein--Lange
+
+###### shortw doubling 
+ projective-1 dbl-1998-cmo-2 1998 Cohen--Miyaji--Ono "Efficient elliptic curve exponentiation using mixed coordinates", formula (4), plus common-subexpression elimination
+
+###### shortw doubling 
+ projective-1 mdbl-2007-bl 2007 Bernstein--Lange
+
+###### shortw doubling 
+ projective-1 dbl-1998-cmo 1998 Cohen--Miyaji--Ono "Efficient elliptic curve exponentiation using mixed coordinates", formula (4)
+
+###### shortw addition 
+ projective-1 add-1998-cmo-2 1998 Cohen--Miyaji--Ono "Efficient elliptic curve exponentiation using mixed coordinates", formula (3), plus common-subexpression elimination
+
+###### shortw addition 
+ projective-1 add-2002-bj-2 2002 Brier--Joye "Weierstrass elliptic curves and side-channel attacks", page 340
+
+###### shortw addition 
+ projective-1 add-1998-cmo 1998 Cohen--Miyaji--Ono "Efficient elliptic curve exponentiation using mixed coordinates", formula (3)
+
+###### shortw addition 
+ projective-1 mmadd-1998-cmo 1998 Cohen--Miyaji--Ono "Efficient elliptic curve exponentiation using mixed coordinates", plus Z1=1, plus Z2=1, plus common-subexpression elimination
+
+###### shortw addition 
+ projective-1 add-2002-bj 2002 Brier--Joye "Weierstrass elliptic curves and side-channel attacks", page 339
+
+###### shortw addition 
+ projective-1 madd-1998-cmo 1998 Cohen--Miyaji--Ono "Efficient elliptic curve exponentiation using mixed coordinates", formula (3), plus common-subexpression elimination, plus Z2=1
+
+###### shortw addition 
+ projective-1 add-2007-bl 2007 Bernstein--Lange
+
+###### shortw doubling 
+ projective dbl-2007-bl 2007 Bernstein--Lange
+
+###### shortw doubling 
+ projective dbl-1998-cmo-2 1998 Cohen--Miyaji--Ono "Efficient elliptic curve exponentiation using mixed coordinates", formula (4), plus common-subexpression elimination
+
+###### shortw doubling 
+ projective mdbl-2007-bl 2007 Bernstein--Lange
+
+###### shortw doubling 
+ projective dbl-2016-rcb 2016 Renes-Costello-Batina "Complete addition formulas for prime order elliptic curves", algorithm (3)
+
+###### shortw doubling 
+ projective dbl-1998-cmo 1998 Cohen--Miyaji--Ono "Efficient elliptic curve exponentiation using mixed coordinates", formula (4)
+
+###### shortw addition 
+ projective add-2016-rcb 2016 Renes-Costello-Batina "Complete addition formulas for prime order elliptic curves", algorithm (1)
+
+###### shortw addition 
+ projective add-1998-cmo-2 1998 Cohen--Miyaji--Ono "Efficient elliptic curve exponentiation using mixed coordinates", formula (3), plus common-subexpression elimination
+
+###### shortw addition 
+ projective add-1998-cmo 1998 Cohen--Miyaji--Ono "Efficient elliptic curve exponentiation using mixed coordinates", formula (3)
+
+###### shortw addition 
+ projective mmadd-1998-cmo 1998 Cohen--Miyaji--Ono "Efficient elliptic curve exponentiation using mixed coordinates", plus Z1=1, plus Z2=1, plus common-subexpression elimination
+
+###### shortw addition 
+ projective add-2002-bj 2002 Brier--Joye "Weierstrass elliptic curves and side-channel attacks", page 339
+
+###### shortw addition 
+ projective madd-1998-cmo 1998 Cohen--Miyaji--Ono "Efficient elliptic curve exponentiation using mixed coordinates", formula (3), plus common-subexpression elimination, plus Z2=1
+
+###### shortw addition 
+ projective add-2007-bl 2007 Bernstein--Lange
+
+###### shortw doubling 
+ jacobian dbl-1986-cc 1986 Chudnovsky--Chudnovsky "Sequences of numbers generated by addition in formal groups and new primality and factorization tests", page 414, formula (4.2ii)
+
+###### shortw doubling 
+ jacobian dbl-1998-hnm 1998 Hasegawa--Nakajima--Matsui, page 188
+
+###### shortw doubling 
+ jacobian dbl-2007-bl 2007 Bernstein--Lange
+
+###### shortw doubling 
+ jacobian dbl-1998-cmo-2 1998 Cohen--Miyaji--Ono "Efficient elliptic curve exponentiation using mixed coordinates", formula (6), plus common-subexpression elimination
+
+###### shortw doubling 
+ jacobian mdbl-2007-bl 2007 Bernstein--Lange
+
+###### shortw doubling 
+ jacobian dbl-1998-cmo 1998 Cohen--Miyaji--Ono "Efficient elliptic curve exponentiation using mixed coordinates", formula (6)
+
+###### shortw addition 
+ jacobian add-1998-cmo-2 1998 Cohen--Miyaji--Ono "Efficient elliptic curve exponentiation using mixed coordinates", formula (5), plus common-subexpression elimination
+
+###### shortw addition 
+ jacobian madd-2008-g 2008 Giessmann
+
+###### shortw addition 
+ jacobian add-1998-cmo 1998 Cohen--Miyaji--Ono "Efficient elliptic curve exponentiation using mixed coordinates", formula (5)
+
+###### shortw addition 
+ jacobian madd None
+
+###### shortw addition 
+ jacobian add-1998-hnm 1998 Hasegawa--Nakajima--Matsui, page 188
+
+###### shortw addition 
+ jacobian madd-2004-hmv 2004 Hankerson--Menezes--Vanstone, page 91
+
+###### shortw addition 
+ jacobian add-1986-cc 1986 Chudnovsky--Chudnovsky "Sequences of numbers generated by addition in formal groups and new primality and factorization tests", page 414, formula (4.3i)
+
+###### shortw addition 
+ jacobian zadd-2007-m 2007 Meloni "New point addition formulae for ECC applications", page 192
+
+###### shortw addition 
+ jacobian add-2001-b 2001 Bernstein http://cr.yp.to/nistp224.html opt-idea53.c ecadd
+
+###### shortw addition 
+ jacobian add-2007-bl 2007 Bernstein--Lange; note that the improvement from 12M+4S to 11M+5S was already mentioned in 2001 Bernstein http://cr.yp.to/talks.html#2001.10.29
+
+###### shortw addition 
+ jacobian madd-2007-bl 2007 Bernstein--Lange
+
+###### shortw addition 
+ jacobian mmadd-2007-bl 2007 Bernstein--Lange
+
+###### shortw doubling 
+ xyzz dbl-2008-s-1 2008 Sutherland
+
+###### shortw doubling 
+ xyzz mdbl-2008-s-1 2008 Sutherland
+
+###### shortw addition 
+ xyzz madd-2008-s 2008 Sutherland
+
+###### shortw addition 
+ xyzz mmadd-2008-s 2008 Sutherland
+
+###### shortw addition 
+ xyzz add-2008-s 2008 Sutherland
+
+###### shortw doubling 
+ modified dbl-2009-bl 2009.04.01 Bernstein--Lange
+
+###### shortw doubling 
+ modified dbl-1998-cmo-2 1998 Cohen--Miyaji--Ono "Efficient elliptic curve exponentiation using mixed coordinates", formula (10), plus common-subexpression elimination
+
+###### shortw doubling 
+ modified mdbl-2009-bl 2009.04.27 Bernstein--Lange
+
+###### shortw addition 
+ modified add-1998-cmo-2 1998 Cohen--Miyaji--Ono "Efficient elliptic curve exponentiation using mixed coordinates", formula (9), plus common-subexpression elimination
+
+###### shortw addition 
+ modified mmadd-2009-bl 2009.04.27 Bernstein--Lange
+
+###### shortw addition 
+ modified add-2009-bl 2009.04.01 Bernstein--Lange
+
+###### shortw addition 
+ modified madd-2009-bl 2009.04.27 Bernstein--Lange
+
+###### shortw doubling 
+ projective-3 dbl-2007-bl 2007 Bernstein--Lange
+
+###### shortw doubling 
+ projective-3 dbl-1998-cmo-2 1998 Cohen--Miyaji--Ono "Efficient elliptic curve exponentiation using mixed coordinates", formula (4), plus common-subexpression elimination
+
+###### shortw doubling 
+ projective-3 dbl-2007-bl-2 2007 Bernstein--Lange
+
+###### shortw doubling 
+ projective-3 mdbl-2007-bl 2007 Bernstein--Lange
+
+###### shortw doubling 
+ projective-3 dbl-2016-rcb 2016 Renes-Costello-Batina "Complete addition formulas for prime order elliptic curves", algorithm (6)
+
+###### shortw doubling 
+ projective-3 dbl-1998-cmo 1998 Cohen--Miyaji--Ono "Efficient elliptic curve exponentiation using mixed coordinates", formula (4)
+
+###### shortw addition 
+ projective-3 add-2016-rcb 2016 Renes-Costello-Batina "Complete addition formulas for prime order elliptic curves", algorithm (4)
+
+###### shortw addition 
+ projective-3 add-1998-cmo-2 1998 Cohen--Miyaji--Ono "Efficient elliptic curve exponentiation using mixed coordinates", formula (3), plus common-subexpression elimination
+
+###### shortw addition 
+ projective-3 add-1998-cmo 1998 Cohen--Miyaji--Ono "Efficient elliptic curve exponentiation using mixed coordinates", formula (3)
+
+###### shortw addition 
+ projective-3 mmadd-1998-cmo 1998 Cohen--Miyaji--Ono "Efficient elliptic curve exponentiation using mixed coordinates", plus Z1=1, plus Z2=1, plus common-subexpression elimination
+
+###### shortw addition 
+ projective-3 add-2002-bj 2002 Brier--Joye "Weierstrass elliptic curves and side-channel attacks", page 339
+
+###### shortw addition 
+ projective-3 madd-1998-cmo 1998 Cohen--Miyaji--Ono "Efficient elliptic curve exponentiation using mixed coordinates", formula (3), plus common-subexpression elimination, plus Z2=1
+
+###### shortw addition 
+ projective-3 add-2007-bl 2007 Bernstein--Lange
+
+###### shortw doubling 
+ xyzz-3 dbl-2008-s-1 2008 Sutherland
+
+###### shortw doubling 
+ xyzz-3 mdbl-2008-s-2 2008 Sutherland
+
+###### shortw doubling 
+ xyzz-3 mdbl-2008-s-1 2008 Sutherland
+
+###### shortw doubling 
+ xyzz-3 dbl-2008-s-2 2008 Sutherland
+
+###### shortw addition 
+ xyzz-3 madd-2008-s 2008 Sutherland
+
+###### shortw addition 
+ xyzz-3 mmadd-2008-s 2008 Sutherland
+
+###### shortw addition 
+ xyzz-3 add-2008-s 2008 Sutherland
+
+###### shortw doubling 
+ jacobian-3 dbl-1986-cc 1986 Chudnovsky--Chudnovsky "Sequences of numbers generated by addition in formal groups and new primality and factorization tests", page 414, formula (4.2ii)
+
+###### shortw doubling 
+ jacobian-3 dbl-1998-hnm-2 1998 Hasegawa--Nakajima--Matsui, page 188
+
+###### shortw doubling 
+ jacobian-3 dbl-1998-hnm 1998 Hasegawa--Nakajima--Matsui, page 188
+
+###### shortw doubling 
+ jacobian-3 dbl-2007-bl 2007 Bernstein--Lange
+
+###### shortw doubling 
+ jacobian-3 dbl-2004-hmv 2004 Hankerson--Menezes--Vanstone, page 91
+
+###### shortw doubling 
+ jacobian-3 dbl-1998-cmo-2 1998 Cohen--Miyaji--Ono "Efficient elliptic curve exponentiation using mixed coordinates", formula (6), plus common-subexpression elimination
+
+###### shortw doubling 
+ jacobian-3 dbl-2001-b 2001 Bernstein "A software implementation of NIST P-224"
+
+###### shortw doubling 
+ jacobian-3 mdbl-2007-bl 2007 Bernstein--Lange
+
+###### shortw doubling 
+ jacobian-3 dbl-1998-cmo 1998 Cohen--Miyaji--Ono "Efficient elliptic curve exponentiation using mixed coordinates", formula (6)
+
+###### shortw doubling 
+ jacobian-3 dbl-1986-cc-2 1986 Chudnovsky--Chudnovsky "Sequences of numbers generated by addition in formal groups and new primality and factorization tests", page 414, formula (4.2ii) modified as indicated after "It is even smarter ..."
+
+###### shortw addition 
+ jacobian-3 add-1998-cmo-2 1998 Cohen--Miyaji--Ono "Efficient elliptic curve exponentiation using mixed coordinates", formula (5), plus common-subexpression elimination
+
+###### shortw addition 
+ jacobian-3 madd-2008-g 2008 Giessmann
+
+###### shortw addition 
+ jacobian-3 add-1998-cmo 1998 Cohen--Miyaji--Ono "Efficient elliptic curve exponentiation using mixed coordinates", formula (5)
+
+###### shortw addition 
+ jacobian-3 madd None
+
+###### shortw addition 
+ jacobian-3 add-1998-hnm 1998 Hasegawa--Nakajima--Matsui, page 188
+
+###### shortw addition 
+ jacobian-3 madd-2004-hmv 2004 Hankerson--Menezes--Vanstone, page 91
+
+###### shortw addition 
+ jacobian-3 add-1986-cc 1986 Chudnovsky--Chudnovsky "Sequences of numbers generated by addition in formal groups and new primality and factorization tests", page 414, formula (4.3i)
+
+###### shortw addition 
+ jacobian-3 zadd-2007-m 2007 Meloni "New point addition formulae for ECC applications", page 192
+
+###### shortw addition 
+ jacobian-3 add-2001-b 2001 Bernstein http://cr.yp.to/nistp224.html opt-idea53.c ecadd
+
+###### shortw addition 
+ jacobian-3 add-2007-bl 2007 Bernstein--Lange; note that the improvement from 12M+4S to 11M+5S was already mentioned in 2001 Bernstein http://cr.yp.to/talks.html#2001.10.29
+
+###### shortw addition 
+ jacobian-3 madd-2007-bl 2007 Bernstein--Lange
+
+###### shortw addition 
+ jacobian-3 mmadd-2007-bl 2007 Bernstein--Lange
+
+###### shortw diffadd 
+ xz mdadd-2002-it 2002 Izu--Takagi "A fast parallel elliptic curve multiplication resistant against side channel attacks", formula (8), plus assumption Z1 = 1
+
+###### shortw diffadd 
+ xz mdadd-2002-it-2 2002 Izu--Takagi "A fast parallel elliptic curve multiplication resistant against side channel attacks", formula (9), plus assumption Z1 = 1
+
+###### shortw diffadd 
+ xz dadd-2002-it-2 2002 Izu--Takagi "A fast parallel elliptic curve multiplication resistant against side channel attacks", formula (9)
+
+###### shortw diffadd 
+ xz mdadd-2002-bj-2 2002 Brier--Joye "Weierstrass elliptic curves and side-channel attacks", formula (9) accompanied by note "7 multiplications plus 3 multiplications by a constant", plus common-subexpression elimination
+
+###### shortw diffadd 
+ xz dadd-2002-it 2002 Izu--Takagi "A fast parallel elliptic curve multiplication resistant against side channel attacks", formula (8)
+
+###### shortw diffadd 
+ xz dadd-2002-it-3 2002 Izu--Takagi "A fast parallel elliptic curve multiplication resistant against side channel attacks", page 295, Formula 1
+
+###### shortw diffadd 
+ xz mdadd-2002-it-3 2002 Izu--Takagi "A fast parallel elliptic curve multiplication resistant against side channel attacks", page 295, Formula 1, plus assumption Z1 = 1
+
+###### shortw diffadd 
+ xz mdadd-2002-bj 2002 Brier--Joye "Weierstrass elliptic curves and side-channel attacks", formula (9) accompanied by note "7 multiplications plus 3 multiplications by a constant"
+
+###### shortw diffadd 
+ xz dadd-2002-it-4 2002 Izu--Takagi "A fast parallel elliptic curve multiplication resistant against side channel attacks", page 296, Formula 2
+
+###### shortw diffadd 
+ xz mdadd-2002-it-4 2002 Izu--Takagi "A fast parallel elliptic curve multiplication resistant against side channel attacks", page 296, Formula 2, plus assumption Z1 = 1
+
+###### shortw doubling 
+ xz dbl-2002-bj-2 2002 Brier--Joye "Weierstrass elliptic curves and side-channel attacks", formula (10) accompanied by note "7 multiplications plus 2 multiplications by a constant", plus common-subexpression elimination
+
+###### shortw doubling 
+ xz dbl-2002-it-2 2002 Izu--Takagi "A fast parallel elliptic curve multiplication resistant against side channel attacks", page 296, Formula 3
+
+###### shortw doubling 
+ xz dbl-2002-bj 2002 Brier--Joye "Weierstrass elliptic curves and side-channel attacks", formula (10) accompanied by note "7 multiplications plus 2 multiplications by a constant"
+
+###### shortw doubling 
+ xz dbl-2002-it 2002 Izu--Takagi "A fast parallel elliptic curve multiplication resistant against side channel attacks", formula (10)
+
+###### shortw doubling 
+ xz dbl-2002-bj-3 2002 Brier--Joye "Weierstrass elliptic curves and side-channel attacks", formula (10) accompanied by note "7 multiplications plus 2 multiplications by a constant", plus common-subexpression elimination emphasizing squaring
+
+###### shortw ladder 
+ xz mladd-2002-bj 2002 Brier--Joye "Weierstrass elliptic curves and side-channel attacks", formulas (9) and (10)
+
+###### shortw ladder 
+ xz mladd-2002-it-4 2002 Izu--Takagi "A fast parallel elliptic curve multiplication resistant against side channel attacks", formulas (9) and (10), plus common-subexpression elimination, plus assumption Z1=1
+
+###### shortw ladder 
+ xz ladd-2002-it-4 2002 Izu--Takagi "A fast parallel elliptic curve multiplication resistant against side channel attacks", formulas (9) and (10), plus common-subexpression elimination
+
+###### shortw ladder 
+ xz mladd-2002-bj-3 2002 Brier--Joye "Weierstrass elliptic curves and side-channel attacks", formulas (9) and (10), plus common-subexpression elimination emphasizing squarings
+
+###### shortw ladder 
+ xz mladd-2002-it-2 2002 Izu--Takagi "A fast parallel elliptic curve multiplication resistant against side channel attacks", formulas (9) and (10), plus assumption Z1 = 1
+
+###### shortw ladder 
+ xz mladd-2002-it 2002 Izu--Takagi "A fast parallel elliptic curve multiplication resistant against side channel attacks", formulas (8) and (10), plus assumption Z1 = 1
+
+###### shortw ladder 
+ xz ladd-2002-it-3 2002 Izu--Takagi "A fast parallel elliptic curve multiplication resistant against side channel attacks", formulas (8) and (10), plus common-subexpression elimination
+
+###### shortw ladder 
+ xz mladd-2002-bj-2 2002 Brier--Joye "Weierstrass elliptic curves and side-channel attacks", formulas (9) and (10), plus common-subexpression elimination
+
+###### shortw ladder 
+ xz ladd-2002-it 2002 Izu--Takagi "A fast parallel elliptic curve multiplication resistant against side channel attacks", formulas (8) and (10)
+
+###### shortw ladder 
+ xz mladd-2002-it-5 2002 Izu--Takagi "A fast parallel elliptic curve multiplication resistant against side channel attacks", formulas (9) and (10), plus common-subexpression elimination, plus assumption Z1=1
+
+###### shortw ladder 
+ xz ladd-2002-it-2 2002 Izu--Takagi "A fast parallel elliptic curve multiplication resistant against side channel attacks", formulas (9) and (10)
+
+###### shortw ladder 
+ xz mladd-2002-it-3 2002 Izu--Takagi "A fast parallel elliptic curve multiplication resistant against side channel attacks", formulas (8) and (10), plus common-subexpression elimination, plus assumption Z1=1
+
+###### twisted doubling 
+ extended-1 dbl-2008-hwcd 2008 Hisil--Wong--Carter--Dawson, http://eprint.iacr.org/2008/522, Section 3.3
+
+###### twisted doubling 
+ extended-1 mdbl-2008-hwcd 2008 Hisil--Wong--Carter--Dawson, http://eprint.iacr.org/2008/522, Section 3.3, plus assumption Z1=1, plus standard simplification
+
+###### twisted addition 
+ extended-1 mmadd-2008-hwcd-3 2008 Hisil--Wong--Carter--Dawson, http://eprint.iacr.org/2008/522, Section 3.1, plus assumption Z1=1, plus standard simplification
+
+###### twisted addition 
+ extended-1 madd-2008-hwcd 2008 Hisil--Wong--Carter--Dawson, http://eprint.iacr.org/2008/522, Section 3.1
+
+###### twisted addition 
+ extended-1 madd-2008-hwcd-2 2008 Hisil--Wong--Carter--Dawson, http://eprint.iacr.org/2008/522, Section 3.2
+
+###### twisted addition 
+ extended-1 add-2008-hwcd-2 2008 Hisil--Wong--Carter--Dawson, http://eprint.iacr.org/2008/522, Section 3.2
+
+###### twisted addition 
+ extended-1 mmadd-2008-hwcd-2 2008 Hisil--Wong--Carter--Dawson, http://eprint.iacr.org/2008/522, Section 3.2, plus assumption Z1=1
+
+###### twisted addition 
+ extended-1 madd-2008-hwcd-3 2008 Hisil--Wong--Carter--Dawson, http://eprint.iacr.org/2008/522, Section 3.1
+
+###### twisted addition 
+ extended-1 madd-2008-hwcd-4 2008 Hisil--Wong--Carter--Dawson, http://eprint.iacr.org/2008/522, Section 3.2
+
+###### twisted addition 
+ extended-1 add-2008-hwcd-4 2008 Hisil--Wong--Carter--Dawson, http://eprint.iacr.org/2008/522, Section 3.2
+
+###### twisted addition 
+ extended-1 mmadd-2008-hwcd 2008 Hisil--Wong--Carter--Dawson, http://eprint.iacr.org/2008/522, Section 3.1, plus assumption Z1=1, plus standard simplification
+
+###### twisted addition 
+ extended-1 add-2008-hwcd-3 2008 Hisil--Wong--Carter--Dawson, http://eprint.iacr.org/2008/522, Section 3.1
+
+###### twisted addition 
+ extended-1 mmadd-2008-hwcd-4 2008 Hisil--Wong--Carter--Dawson, http://eprint.iacr.org/2008/522, Section 3.2, plus assumption Z1=1
+
+###### twisted addition 
+ extended-1 add-2008-hwcd 2008 Hisil--Wong--Carter--Dawson, http://eprint.iacr.org/2008/522, Section 3.1
+
+###### twisted doubling 
+ projective dbl-2008-bbjlp 2008 Bernstein--Birkner--Joye--Lange--Peters http://eprint.iacr.org/2008/013
+
+###### twisted doubling 
+ projective mdbl-2008-bbjlp 2008 Bernstein--Birkner--Joye--Lange--Peters http://eprint.iacr.org/2008/013, plus Z1=1, plus standard simplification
+
+###### twisted addition 
+ projective add-2008-bbjlp 2008 Bernstein--Birkner--Joye--Lange--Peters http://eprint.iacr.org/2008/013 Section 6
+
+###### twisted addition 
+ projective madd-2008-bbjlp 2008 Bernstein--Birkner--Joye--Lange--Peters http://eprint.iacr.org/2008/013 Section 6, plus Z2=1, plus common-subexpression elimination
+
+###### twisted addition 
+ projective mmadd-2008-bbjlp 2008 Bernstein--Birkner--Joye--Lange--Peters http://eprint.iacr.org/2008/013 Section 6, plus Z2=1, plus Z1=1, plus standard simplification
+
+###### twisted doubling 
+ inverted dbl-2008-bbjlp 2008 Bernstein--Birkner--Joye--Lange--Peters http://eprint.iacr.org/2008/013, Section 6
+
+###### twisted doubling 
+ inverted mdbl-2008-bbjlp 2008 Bernstein--Birkner--Joye--Lange--Peters http://eprint.iacr.org/2008/013, Section 6, plus Z1=1
+
+###### twisted addition 
+ inverted add-2008-bbjlp 2008 Bernstein--Birkner--Joye--Lange--Peters http://eprint.iacr.org/2008/013, Section 6
+
+###### twisted addition 
+ inverted madd-2008-bbjlp 2008 Bernstein--Birkner--Joye--Lange--Peters http://eprint.iacr.org/2008/013, Section 6, plus Z2=1, plus common-subexpression elimination
+
+###### twisted addition 
+ inverted mmadd-2008-bbjlp 2008 Bernstein--Birkner--Joye--Lange--Peters http://eprint.iacr.org/2008/013, Section 6, plus Z2=1, plus Z1=1, plus common-subexpression elimination
+
+###### twisted doubling 
+ extended dbl-2008-hwcd 2008 Hisil--Wong--Carter--Dawson, http://eprint.iacr.org/2008/522, Section 3.3
+
+###### twisted doubling 
+ extended mdbl-2008-hwcd 2008 Hisil--Wong--Carter--Dawson, http://eprint.iacr.org/2008/522, Section 3.3, plus assumption Z1=1, plus standard simplification
+
+###### twisted addition 
+ extended madd-2008-hwcd 2008 Hisil--Wong--Carter--Dawson, http://eprint.iacr.org/2008/522, Section 3.1
+
+###### twisted addition 
+ extended madd-2008-hwcd-2 2008 Hisil--Wong--Carter--Dawson, http://eprint.iacr.org/2008/522, Section 3.2
+
+###### twisted addition 
+ extended add-2008-hwcd-2 2008 Hisil--Wong--Carter--Dawson, http://eprint.iacr.org/2008/522, Section 3.2
+
+###### twisted addition 
+ extended mmadd-2008-hwcd-2 2008 Hisil--Wong--Carter--Dawson, http://eprint.iacr.org/2008/522, Section 3.2, plus assumption Z1=1
+
+###### twisted addition 
+ extended mmadd-2008-hwcd 2008 Hisil--Wong--Carter--Dawson, http://eprint.iacr.org/2008/522, Section 3.1, plus assumption Z1=1, plus standard simplification
+
+###### twisted addition 
+ extended add-2008-hwcd 2008 Hisil--Wong--Carter--Dawson, http://eprint.iacr.org/2008/522, Section 3.1
+
