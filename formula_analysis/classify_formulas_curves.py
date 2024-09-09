@@ -132,12 +132,13 @@ class Resistance:
         self.formula.remove_polynomials(to_remove)
 
     def reclassify_hard(self):
-        for polynomial in self.formula.hard_zvp():
-            polynomial = self.curve.polynomial_ring_to_base_field(polynomial)
+        for hard_polynomial in self.formula.hard_zvp():
+            polynomial = self.curve.polynomial_ring_to_base_field(hard_polynomial)
             if self.formula._is_single_index_factor(polynomial):
-                assert (
-                    False
-                ), "Attempted reclasification of Hard polynomial, Not implemented"
+                self.formula.single_point_factors.append(polynomial)
+                assert False, "Not implemented, does not happen"
+            if self.curve.form=="shortw" and self.curve.a==0:
+                reclassify_a0(self.formula,hard_polynomial,polynomial)
 
     def resistance(self):
         if self.formula.zvp_vulnerable():
@@ -160,6 +161,20 @@ class Resistance:
         if self.general_formula_resistance != self.resistance():
             return f"{self.general_formula_resistance}>{self.resistance()}"
         return False
+    
+
+def reclassify_a0(formula: FormulaZero, hard_polynomial,polynomial):
+
+    for special_polynomial in ['Y1-Y2','Y1+Y2','X1**2 + X1*X2 + X2**2','3*X1*X2','3*X3*X2','X2*X1','X2*X3']:
+        if polynomial.is_constant():
+            formula.remove_polynomials([str(hard_polynomial)])
+            return
+        try:
+            assert polynomial.parent()(special_polynomial)==polynomial
+            formula.remove_polynomials([str(hard_polynomial)])
+            return
+        except (AssertionError, TypeError):
+            continue
 
 
 

@@ -66,7 +66,7 @@ class FormulaZero:
         )
         f0.multi_point_factors = set(f0.ring(f) for f in dictionary["hard_polynomials"])
         f0.coordinate_factors = set(
-            (coord, f0.ring(f)) for coord, f in dictionary["coordinate_polynomials"]
+            (tuple(coords), f0.ring(f)) for coords, f in dictionary["coordinate_polynomials"]
         )
         f0.unsolvable_factors = set(
             f0.ring(f) for f in dictionary["unsolvable_polynomials"]
@@ -155,17 +155,18 @@ class FormulaZero:
                 indexes.add(int(num[0]))
         return len(indexes) == 1
 
-    def _get_coordinate_if_factor(self, polynomial, formula):
+    def _get_coordinates_if_factor(self, polynomial, formula):
+        coordinates = []
         for coordinate, output_function in formula.output().items():
             num = output_function.numerator()
             if divides_mod(self, polynomial, num):
-                return coordinate
-        return None
+                coordinates.append(coordinate)
+        return tuple(coordinates)
 
     def _sort_numerators(self, formula):
         for polynomial in self.factor_set:
-            if coordinate := self._get_coordinate_if_factor(polynomial, formula):
-                self.coordinate_factors.add((coordinate, polynomial))
+            if coordinates := self._get_coordinates_if_factor(polynomial, formula):
+                self.coordinate_factors.add((coordinates, polynomial))
                 continue
             if self._is_single_point_factor(polynomial, formula):
                 self.single_point_factors.add(polynomial)
@@ -215,9 +216,9 @@ class FormulaZeroCollection:
             for f in formula0.factor_set:
                 g = normalize_polynomial(self.ring(f))
                 self.factor_set.add(normalize_polynomial(g))
-            for coord, f in formula0.coordinate_factors:
+            for coords, f in formula0.coordinate_factors:
                 g = normalize_polynomial(self.ring(f))
-                self.coordinate_factors.add((coord, normalize_polynomial(g)))
+                self.coordinate_factors.add((coords, normalize_polynomial(g)))
             for f in formula0.multi_point_factors:
                 g = normalize_polynomial(self.ring(f))
                 self.multi_point_factors.add(normalize_polynomial(g))
@@ -275,7 +276,7 @@ def load_formula0s(formulas):
     formula0s = {}
     for name, formula in formulas.items():
         formula.flag_homogeneity()
-        #formula.flag_multiplication_intermediate_values()
+        # formula.flag_multiplication_intermediate_values()
         formula.to_affine()
         formula0 = FormulaZero.from_formula(formula)
         formula0s[name] = formula0
@@ -304,10 +305,10 @@ def print_classified_formulas(formula0s):
         for f0 in semi_resistant:
             if f0.hard_zvp() == hard_zvp_set:
                 print(f0.full_name, end=", ")
-        print(hard_zvp_set, "\n")
+        print(f"({len(hard_zvp_set)}): {hard_zvp_set} \n")
     print("**Vulnerable:**")
     for formula0 in formula0s.zvp_vulnerable():
-        print(f"{formula0.full_name}: {formula0s.easy_zvp()}\n")
+        print(f"{formula0.full_name}: {formula0.easy_zvp()}\n")
 
 
 def print_classified_formulas_dbl(formula0s):

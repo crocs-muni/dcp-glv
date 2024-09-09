@@ -1,7 +1,7 @@
 Scripts for dowloading, parsing and unrolling formulas. It creates a json file for each curve form and operation
 
 1. Clone database:
-	`git clone <anonymized for review>`
+	`git clone https://github.com/vojtechsu/efd-dcp.git`
 2. Unroll formulas. It creates folder "unrolled" and a file "formulas_list.txt":
 	`python3 unroll.py efd-dcp`
 3. Create a list of sources for individual formulas into sources.txt:

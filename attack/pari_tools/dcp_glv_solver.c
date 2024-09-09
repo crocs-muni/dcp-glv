@@ -6,6 +6,8 @@
 
 #include "dcp.h"
 
+
+
 int main(int argc, char *argv[]) {
   /* p, a, b, beta, k1, k2, guess, filename are arguments
   p = base-field prime
@@ -18,20 +20,59 @@ int main(int argc, char *argv[]) {
   stack = 16000000000;
   pari_init(stack, 65536);
 
-  GEN p, a, b, beta;
-  long k1, k2, guess;
-  char *filename;
+  GEN p, a, b, Vs, fs, V,f;
+  GEN lam;
+  long k1, k2;
+  char *filename, *Vpoly_path, *fpoly_path;
 
   p = strtoi(argv[1]);
   a = strtoi(argv[2]);
   b = strtoi(argv[3]);
-  beta = strtoi(argv[4]);
-  k1 = strtol(argv[5], NULL, 10);
+  k1 = strtol(argv[4], NULL, 10);
+  lam = strtoi(argv[5]);
   k2 = strtol(argv[6], NULL, 10);
-  guess = strtol(argv[7], NULL, 10);
-  filename = argv[8];
+  Vpoly_path = argv[7];
+  fpoly_path = argv[8];
+  filename = argv[9];
+  FILE *fptr;
+  fptr = fopen(Vpoly_path,"r");
 
-  dcp_semaev(p, a, b, beta, k1, k2, guess, filename);
+  if(fptr == NULL)
+  {
+  printf("Error!");   
+  exit(1);             
+  }
+  Vs = gp_read_stream(fptr);
+  fclose(fptr);
+
+  fptr = fopen(fpoly_path,"r");
+
+  if(fptr == NULL)
+  {
+  printf("Errr!");   
+  exit(1);             
+  }
+  fs = gp_read_stream(fptr);
+  fclose(fptr);
+
+  GEN E, map1,map2;
+  E = ellinit(mkvec2(a, b), p, 0);
+  // printf("1\n");
+  map1 = ellxn(E, k1, -1);
+  map2 = ellxn(E, k2, -1);
+  pari_sp av;
+  // printf("2\n");
+  for(int i=1;i<lg(Vs);i++){
+    V = gel(Vs,i);
+    f = gel(fs,i);
+    // printf("3\n");
+    f = gsubst(f,varn(gp_read_str("A")),a);
+    f = gsubst(f,varn(gp_read_str("B")),b);
+    av = avma;
+    if(dcp_semaev(E,p, k1, map1, lam, k2, map2, V, f, filename)) break;
+    avma = av;
+    // printf("4\n");
+  }
   pari_close();
   return 0;
 }

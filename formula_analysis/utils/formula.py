@@ -201,7 +201,9 @@ class ShortWFormula(Formula):
         if self.coordinates.endswith("-0"):
             self.a = 0
         if self.coordinates.endswith("-3"):
-            self.a = 3
+            self.a = -3
+        if self.coordinates.endswith("-1"):
+            self.a = -1
         self.b = None
         if self.coordinates == "w12-0":
             self.b = 0
@@ -211,7 +213,8 @@ class ShortWFormula(Formula):
         """remove T in modified Jacobian Coordinates"""
         for var in filter(lambda x: x.startswith("T"), self.variables):
             self.variables.remove(var)
-            a, T = self.ring.gens_dict()["a"], self.ring.gens_dict()[var]
+            a = self.ring.gens_dict().get('a',self.a)
+            T = self.ring.gens_dict()[var]
             self.ring = PolynomialRing(
                 self.ring.base_ring(), self.variables + self.coefficients
             )
@@ -219,12 +222,18 @@ class ShortWFormula(Formula):
                 row.substitute({T: a}, self.ring)
 
     def set_a(self, a):
-        self.a = self.curve_field(a)
+        if self.curve_field:
+            self.a = self.curve_field(a)
+        else:
+            self.a = a
         if "a" in self.coefficients:
             self.set_param("a", self.a)
 
     def set_b(self, b):
-        self.b = self.curve_field(b)
+        if self.curve_field:
+            self.b = self.curve_field(b)
+        else:
+            self.b = b
         if "b" in self.coefficients:
             self.set_param("b", self.b)
 

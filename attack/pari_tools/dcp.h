@@ -12,19 +12,18 @@
 /* DCP solver for the polynomial x1+x2+2
   Outputs the roots (x-coordinates) into a filename.
   See dcp_pari.py for python api. */
-void dcp(GEN p, GEN a, GEN b, long k, char *filename);
+int dcp(GEN E, GEN p, long k, GEN map, GEN lam,GEN V, GEN f, char *filename);
 
-/* DCP solver for the polynomial x1+x2+2 on a curve over quadratic extension.
-  Outputs the roots (x-coordinates) into a filename.
-  See dcp_pari.py for python api. */
-void dcp_extension(GEN p, GEN p1, GEN p2, GEN a1, GEN a2, GEN b1, GEN b2,
-                   long k, char *filename);
+
+int multidcp(GEN E, GEN p, long k, long l, GEN mapk, GEN mapl, GEN lam,GEN V, GEN f, char *filename);
+
 
 /* Sums vector elements into result*/
 void sum(GEN vector, long length, GEN result);
 
 /* Multiplies vector elements into result*/
 void prod(GEN vector, long length, GEN result);
+
 
 /* DCP solver for the polynomial x1+x2+2 using the Semaev polynomial
   Outputs the roots (x-coordinates) into a filename.
@@ -33,7 +32,11 @@ void prod(GEN vector, long length, GEN result);
   The polynomial is S3(-x1-2,k1(x1),k2(beta*x1)) for guess=0 and
   S3(-beta^2*x1-2,k1(x1),k2(beta*x1)) otherwise
   */
-void dcp_semaev(GEN p, GEN a, GEN b, GEN beta, long k1, long k2, long guess,
+int dcp_semaev(GEN E, GEN p, long k1, GEN map1, GEN lam, long k2, GEN map2, GEN V, GEN f,
+                char *filename);
+
+
+int multidcp_semaev(GEN E, GEN p, long l, GEN map0, long k1, GEN map1, GEN lam, long k2, GEN map2, GEN V, GEN f,
                 char *filename);
 
 #endif

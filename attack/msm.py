@@ -5,7 +5,7 @@ Implementation of multi-scalar multiplication as designed in https://eprint.iacr
 """
 
 from glv import glv_decompose
-from sage.all import PolynomialRing, ceil, log
+from sage.all import ceil, log
 
 
 def to_bin(k, l):
@@ -216,154 +216,133 @@ def scalar_mul_positive(k0, k1, P, lamb, beta, n):
     return Q
 
 
-# =========================================================
-# ================== Symbolic part begins==================
-# =========================================================
+def zip_bits_big_end(k0, k1, pad):
+    bits = []
+    while k0 > 0 or k1 > 0:
+        bits.append([k0 % 2, k1 % 2])
+        k0 >>= 1
+        k1 >>= 1
+    assert pad >= len(bits)
+    bits += [[0, 0]] * (pad - len(bits))
+    return reversed(bits)
 
 
-def reduce_mod_curve(poly, a, b):
-    """Reduces polynomial :poly: modulo curve equation, i.e. replaces y**2 by x**3+ax+b"""
-    x, y = poly.parent().gens()
-    equation = x**3 + a * x + b
-    exponents = poly.exponents()  # list of (i,j) for each term x**i*y**j in poly
-    for e_x, e_y in exponents:
-        if e_y < 2:
-            continue
-        coef = poly.coefficient({x: e_x, y: e_y})
-        e = e_y % 2
-        poly -= coef * x ** (e_x) * y ** (e_y)
-        poly += coef * x ** (e_x) * y**e * equation ** ((e_y // 2))
-    return poly
-
-
-def reduce_map(f, a, b):
-    """Reduces map on a curve modulo curve equation"""
-    y0 = f.parent().gens()[1]
-    num = f.numerator()
-    den = f.denominator()
-    if (den / y0).denominator() == 1:
-        num *= y0
-        den *= y0
-    num = num.numerator()
-    den = den.numerator()
-    num = reduce_mod_curve(num, a, b)
-    den = reduce_mod_curve(den, a, b)
-    return num / den
-
-
-def symbolic_double(P, a, b):
-    """Symbolically doubles point P (tuple of rational functions)"""
-    x, y = P
-    if x == 0 and y == 1:
-        return x, y
-    s = (3 * x**2 + x.parent()(a)) / (2 * y)
-    x3 = s**2 - 2 * x
-    y3 = y + s * (x3 - x)
-    return (reduce_map(x3, a, b), reduce_map(-y3, a, b))
-
-
-def symbolic_addition(P, Q, a, b):
-    """Symbolically adds points P and Q (tuples of rational functions)"""
-    (x1, y1), (x2, y2) = P, Q
-    if x1 == x2 and y1 == y2:
-        return symbolic_double(P, a, b)
-    if x1 == 0 and y1 == 1:
-        return Q
-    if x2 == 0 and y2 == 1:
-        return P
-    s = (y1 - y2) / (x1 - x2)
-    x3 = s**2 - x1 - x2
-    y3 = y1 + s * (x3 - x1)
-    return (reduce_map(x3, a, b), reduce_map(-y3, a, b))
-
-
-def symbolic_scalar_mul(k, P, lamb, beta, n, a, b):
-    """Symbolic version of scalar_mul, P is here a tuple of rational functions"""
-
-    l = ceil(log(n, 2) / 2) + 2
-
-    # Precomputation stage ==========
-    table = [P, (beta**2 * P[0], -P[1])]
-    # P = (x,y), P+lamb*P=(beta^2*x,-y)
-    # ===============================
-
-    # Recoding stage ================
-    k0, k1 = glv_decompose(k, lamb, n)
-    even = k0 % 2
-    if even == 0:
-        k0 = k0 - 1
-    s0, s1 = 1, 1
-    if k0 < 0:
-        s0 = -1
-        k0 = -k0
-    if k1 < 0:
-        s1 = -1
-        k1 = -k1
-    k0bin = to_bin(k0, l)
-    k1bin = to_bin(k1, l)
-
-    b0bin, b1bin = twodim_recoding_extended(k0bin, s0, k1bin, s1)
-    # si = b0bin[i] in the paper
-    # Ki = b1bin[i] in the paper
-    # ===============================
-
-    # Evaluation stage ==============
-    def mul_point(s, point):
-        if s == 1:
-            return point
-        if s == -1:
-            return (point[0], -point[1])
-        raise Exception(s)
-
-    Q = mul_point(b0bin[l - 1], table[b1bin[l - 1]])
-    for i in range(l - 2, -1, -1):
-        Q = symbolic_double(Q, a, b)
-        Q = symbolic_addition(Q, mul_point(b0bin[i], table[b1bin[i]]), a, b)
-    if even == 0:
-        Q = symbolic_addition(Q, P, a, b)
-    # ===============================
-
+def shamir_scalar_mul_positive(k0, k1, P, lamb, beta, n):
+    lamP = P.curve()(beta * (P[0]), P[1])
+    lam2P = P.curve()(beta * (lamP[0]), lamP[1])
+    table = [[P.curve()(0), lamP], [P, -lam2P]]
+    Q = P.curve()(0)
+    l = ceil(log(n, 2) / 2) + 1
+    for b0, b1 in zip_bits_big_end(k0, k1, l):
+        Q *= 2
+        Q += table[b0][b1]
+    assert Q == (k0 + k1 * lamb) * P, Q
     return Q
 
 
-def symbolic_scalar_mul_positive(k0, k1, P, lamb, beta, n, a, b):
-    """Symbolic version of scalar_mul_positive, P is here a tuple of rational functions"""
+def mods(k, w):
+    mod = 1 << w
+    u = k % mod
+    if u >= (mod >> 1):
+        u -= mod
+    return u
 
-    l = ceil(log(n, 2) / 2) + 1
 
-    # Precomputation stage ==========
-    table = [P, (beta**2 * P[0], -P[1])]
-    # P = (x,y), P+lamb*P=(beta^2*x,-y)
-    # ===============================
+def wnaf(k, w):
+    i = 0
+    naf = []
+    while k >= 1:
+        if k % 2 != 0:
+            naf.append(mods(k, w))
+            k -= naf[-1]
+        else:
+            naf.append(0)
+        k //= 2
+        i += 1
+    return naf
 
-    # Recoding stage ================
-    even = k0 % 2
-    if even == 0:
-        k0 = k0 - 1
-    k0bin = to_bin(k0, l)
-    k1bin = to_bin(k1, l)
 
-    b0bin, b1bin = twodim_recoding(k0bin, k1bin)
-    # si = b0bin[i] in the paper
-    # Ki = b1bin[i] in the paper
-    # ===============================
+def from_wnaf(naf):
+    v = 0
+    for n in reversed(naf):
+        v *= 2
+        v += n
+    return v
 
-    # Evaluation stage ==============
-    def mul_point(s, point):
-        if s == 1:
-            return point
-        if s == -1:
-            return (point[0], -point[1])
-        raise Exception(s)
 
-    Q = mul_point(b0bin[l - 1], table[b1bin[l - 1]])
-    for i in range(l - 2, -1, -1):
-        Q = symbolic_double(Q, a, b)
-        Q = symbolic_addition(Q, mul_point(b0bin[i], table[b1bin[i]]), a, b)
-    if even == 0:
-        Q = symbolic_addition(Q, P, a, b)
-    # ===============================
+def fromcutwnaf(wk):
+    for i, n in enumerate(wk):
+        if n != 0:
+            break
+    v = from_wnaf(wk[i:])
+    return v, v - 1
 
+
+def pad_nafs(naf0, naf1, l=None):
+    if l is None:
+        l = max(len(naf0), len(naf1))
+    return naf0 + [0] * (l - len(naf0)), naf1 + [0] * (l - len(naf1))
+
+
+def interleaving_positive(k0, k1, P, lamb, beta, n, w):
+    curve = P.curve()
+    naf0, naf1 = wnaf(k0, w), wnaf(k1, w)
+
+    table0 = {2 * i - 1: (2 * i - 1) * P for i in range(1, 2 ** (w - 2) + 1)}
+    table0.update({-i: -P for i, P in table0.items()})
+    table0[0] = curve(0)
+    table1 = {i: lamb * P for i, P in table0.items()}
+
+    Q = curve(0)
+    for (n0, n1) in reversed(list(zip(*pad_nafs(naf0, naf1)))):
+        Q *= 2
+        Q += table0[n0] + table1[n1]
+    return Q
+
+
+def regular_wnaf(k, w):
+    i = 0
+    m = 2**w
+    l = int(k).bit_length()
+    assert w in [1,2,3,4,5]  # nothing else tested
+    assert k % 2 == 1
+    digits = []
+    while k > m:
+        digits.append((k % (2 * m)) - m)
+        k = (k - digits[-1]) // m
+        i += 1
+    digits.append(k)
+    assert len(digits) == ceil(l/w), (len(digits), l)
+    return digits
+
+
+def from_regular_wnaf(rwnaf,w):
+    v = 0
+    m = 2**w
+    for n in reversed(rwnaf):
+        v*=m
+        v+=n
+    return v 
+
+def fromcutregularwnaf(wk, w):
+    for i, n in enumerate(wk):
+        if n != 0:
+            break
+    v = from_regular_wnaf(wk[i:], w)
+    return v, v - 1
+
+
+def signed_shamir_scalar_mul_positive(k0, k1, P, lamb, beta, n, w):
+
+    lamP = P.curve()(beta * (P[0]), P[1])
+    table = {(i, j): i * P + j * lamP for i, j in [[-1, -1], [-1, 1], [1, -1], [1, 1]]}
+    Q = P.curve()(0)
+    s0, s1 = regular_wnaf(k0, w), regular_wnaf(k1, w)
+    assert len(s0) == len(s1)
+    for b0, b1 in reversed(list(zip(s0, s1))):
+        Q *= 2
+        Q += table[(b0, b1)]
+    assert Q == (k0 + k1 * lamb) * P, Q
     return Q
 
 
@@ -372,7 +351,7 @@ def symbolic_scalar_mul_positive(k0, k1, P, lamb, beta, n, a, b):
 # =========================================================
 
 
-def scalar_mul_oracle(k, P, lamb, beta, n, oracle_polynomial):
+def scalar_mul_oracle(k, P, lamb, beta, n, registers):
     """
     scalar_mul with a side-channel oracle
     currently using the positive version
@@ -410,7 +389,7 @@ def scalar_mul_oracle(k, P, lamb, beta, n, oracle_polynomial):
         Q = 2 * Q
         Pi = b0bin[i] * table[b1bin[i]]
         Q = Q + Pi
-        if oracle_polynomial(Pi[0], Pi[1], Q[0], Q[1]) == 0:
+        if registers.is_zero(Pi, Q):
             print(f"LEAK: {i}")
     if even == 0:
         Q = Q + P
@@ -420,28 +399,28 @@ def scalar_mul_oracle(k, P, lamb, beta, n, oracle_polynomial):
     return Q
 
 
-def scalar_mul_oracle_positive(k0, k1, P, lamb, beta, n, iteration):
+def scalar_mul_oracle_positive(P, zvpparams, iteration):
     """
-    scalar_mul_positive with side-channel oracle for f=x1+x2+2
+    scalar_mul_positive with side-channel oracle
     """
-    x1, x2, y1, y2 = PolynomialRing(
-        P.curve().base_field(), ["x1", "x2", "y1", "y2"]
-    ).gens()
-    f = x1 + x2 + 2
-    k = (k0 + k1 * lamb) % n
-    l = ceil(log(n, 2) / 2) + 1
+    secrets = zvpparams.secrets
+    glv = zvpparams.glv
+    k = (secrets.k0 + secrets.k1 * glv.lam) % glv.order
+    l = secrets.half_bits + 1
 
     # Precomputation stage ==========
-    table = [P, P.curve()(beta**2 * P[0], -P[1])]
+    table = [P, P.curve()(glv.beta**2 * P[0], -P[1])]
     # P = (x,y), P+lamb*P=(beta^2*x,-y)
     # ===============================
 
     # Recoding stage ================
-    even = k0 % 2
+    even = secrets.k0 % 2
     if even == 0:
-        k0 = k0 - 1
+        k0 = secrets.k0 - 1
+    else:
+        k0 = secrets.k0
     k0bin = to_bin(k0, l)
-    k1bin = to_bin(k1, l)
+    k1bin = to_bin(secrets.k1, l)
 
     b0bin, b1bin = twodim_recoding(k0bin, k1bin)
     # si = b0bin[i] in the paper
@@ -457,17 +436,156 @@ def scalar_mul_oracle_positive(k0, k1, P, lamb, beta, n, iteration):
         Pi = b0bin[i] * table[b1bin[i]]
         assert (
             Q
-            == 2 * (from_bin(b0bin[(i + 1) :]) + from_bin(b1bin[(i + 1) :]) * lamb) * P
+            == 2
+            * (from_bin(b0bin[(i + 1) :]) + from_bin(b1bin[(i + 1) :]) * glv.lam)
+            * P
         )
-        assert Pi[0] == ((beta**2) ** (b1bin[i] != 0)) * (P[0])
+        assert Pi[0] == ((glv.beta**2) ** (b1bin[i] != 0)) * (P[0])
         if iteration == i:
-            found = f(Pi[0], Q[0], Pi[1], Q[1]) == 0
+            found = zvpparams.registers.is_zero(Pi, Q)
         Q = Q + Pi
     if even == 0:
         Q = Q + P
     # ===============================
 
     assert (
-        Q == (k0 + (not even) + lamb * k1) * P
-    ), f"Computed: {Q}, should be {k*P}, for P={P}, lam={lamb}, beta={beta}"
+        Q == (k0 + (not even) + glv.lam * secrets.k1) * P
+    ), f"Computed: {Q}, should be {k*P}, for P={P}, lam={glv.lam}, beta={glv.beta}"
     return Q, found
+
+
+def shamir_scalar_mul_oracle_positive(P, zvpparams, iteration):
+    secrets = zvpparams.secrets
+    lamP = P.curve()(zvpparams.glv.beta * (P[0]), P[1])
+    lam2P = P.curve()(zvpparams.glv.beta * (lamP[0]), lamP[1])
+    table = [[P.curve()(0), lamP], [P, -lam2P]]
+    Q = P.curve()(0)
+    found = False
+    l = secrets.half_bits
+    i = l - 1
+    for [b0, b1] in zip_bits_big_end(secrets.k0, secrets.k1, l):
+        Q *= 2
+        if iteration == i:
+            found = zvpparams.registers.is_zero(table[b0][b1], Q)
+        Q += table[b0][b1]
+        i -= 1
+    assert Q == (secrets.k0 + secrets.k1 * zvpparams.glv.lam) * P, Q
+    return Q, found
+
+
+def signed_shamir_scalar_mul_oracle_positive(P, zvpparams, iteration, w):
+    secrets = zvpparams.secrets
+    glv = zvpparams.glv
+    lamP = P.curve()(glv.beta * (P[0]), P[1])
+    table = {(i, j): i * P + j * lamP for i, j in [[-1, -1], [-1, 1], [1, -1], [1, 1]]}
+    Q = P.curve()(0)
+    s0, s1 = regular_wnaf(secrets.k0, w), regular_wnaf(secrets.k1, w)
+    assert len(s0) == len(s1)
+    l = ceil(secrets.half_bits/w)
+    i = l - 1
+    for b0, b1 in reversed(list(zip(s0, s1))):
+        Q *= 2
+        if iteration == i:
+            found = zvpparams.registers.is_zero(table[(b0, b1)], Q)
+        Q += table[(b0, b1)]
+        i -= 1
+    assert Q == (secrets.k0 + secrets.k1 * glv.lam) * P, Q
+    return Q, found
+
+
+def interleaving_oracle_positive(P, zvpparams, iteration, w=3):
+    curve = P.curve()
+    k0, k1 = zvpparams.secrets.k0, zvpparams.secrets.k1
+    lamb = zvpparams.glv.lam
+    naf0, naf1 = wnaf(k0, w), wnaf(k1, w)
+
+    table0 = {2 * i - 1: (2 * i - 1) * P for i in range(1, 2 ** (w - 2) + 1)}
+    table0.update({-i: -P for i, P in table0.items()})
+    table0[0] = curve(0)
+    table1 = {i: lamb * P for i, P in table0.items()}
+
+    Q = curve(0)
+    l = zvpparams.secrets.half_bits + 1
+    i = l - 1
+    found = False
+    for (n0, n1) in reversed(list(zip(*pad_nafs(naf0, naf1, l)))):
+        Q *= 2
+        if iteration == i:
+            found = zvpparams.registers.is_zero(table0[n0], Q)
+        Q += table0[n0]
+        if iteration == i:
+            found = found or zvpparams.registers.is_zero(table1[n1], Q)
+        Q += table1[n1]
+        i -= 1
+    return Q, found
+
+
+def regular_interleaving_oracle_positive(P, zvpparams, iteration, w=3):
+    curve = P.curve()
+    k0, k1 = zvpparams.secrets.k0, zvpparams.secrets.k1
+    lamb = zvpparams.glv.lam
+    naf0, naf1 = regular_wnaf(k0, w), regular_wnaf(k1, w)
+
+    table0 = {2 * i - 1: (2 * i - 1) * P for i in range(1, 2 ** (w - 1) + 1)}
+    table0.update({-i: -P for i, P in table0.items()})
+    table0[0] = curve(0)
+    table1 = {i: lamb * P for i, P in table0.items()}
+
+    Q = curve(0)
+    l = ceil(zvpparams.secrets.half_bits/w)
+    assert len(naf0)==l and len(naf1)==l, (l, zvpparams.secrets.half_bits, len(naf0),len(naf1))
+    i = l - 1
+    found = False
+    m = 2**w
+    for (n0, n1) in reversed(list(zip(naf0,naf1))):
+        Q *= m
+        if iteration == i:
+            found = zvpparams.registers.is_zero(table0[n0], Q)
+        Q += table0[n0]
+        if iteration == i:
+            found = found or zvpparams.registers.is_zero(table1[n1], Q)
+        Q += table1[n1]
+        i -= 1
+    return Q, found
+
+
+def interleaving_easy_oracle_positive(P, zvpparams, w=3):
+    curve = P.curve()
+    k0, k1 = zvpparams.secrets.k0, zvpparams.secrets.k1
+    lamb = zvpparams.glv.lam
+    naf0, naf1 = wnaf(k0, w), wnaf(k1, w)
+
+    table0 = {2 * i - 1: (2 * i - 1) * P for i in range(1, 2 ** (w - 2) + 1)}
+    table0.update({-i: -P for i, P in table0.items()})
+    table0[0] = curve(0)
+    table1 = {i: lamb * P for i, P in table0.items()}
+    l = zvpparams.secrets.half_bits + 1
+    Q = curve(0)
+    found = []
+    for (n0, n1) in reversed(list(zip(*pad_nafs(naf0, naf1, l)))):
+        Q *= 2
+        found.append(zvpparams.registers.is_zero(table0[n0], table1[n1]))
+        Q += table0[n0] + table1[n1]
+    return Q, list(reversed(found))
+
+
+def regular_interleaving_easy_oracle_positive(P, zvpparams, w=3):
+    curve = P.curve()
+    k0, k1 = zvpparams.secrets.k0, zvpparams.secrets.k1
+    lamb = zvpparams.glv.lam
+    naf0, naf1 = regular_wnaf(k0, w), regular_wnaf(k1, w)
+
+    table0 = {2 * i - 1: (2 * i - 1) * P for i in range(1, 2 ** (w - 1) + 1)}
+    table0.update({-i: -P for i, P in table0.items()})
+    table0[0] = curve(0)
+    table1 = {i: lamb * P for i, P in table0.items()}
+    l = ceil(zvpparams.secrets.half_bits/w)
+    assert len(naf0)==l and len(naf1)==l, (l, zvpparams.secrets.half_bits, len(naf0),len(naf1))
+    Q = curve(0)
+    found = []
+    m = 2**w
+    for (n0, n1) in reversed(list(zip(naf0, naf1))):
+        Q *= m
+        found.append(zvpparams.registers.is_zero(table0[n0], table1[n1]))
+        Q += table0[n0] + table1[n1]
+    return Q, list(reversed(found))

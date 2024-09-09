@@ -1,0 +1,60 @@
+# Ignore all
+*
+
+# Unignore all with extensions
+!*.*
+
+# Unignore all dirs
+!*/
+
+
+.ipynb_checkpoints/
+.vscode/
+__pycache__/
+*.pyc
+*.o
+
+## Pdfs
+
+#*.pdf
+
+## Core latex/pdflatex auxiliary files:
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+.*.lb
+
+
+## Bibliography auxiliary files (bibtex/biblatex/biber):
+*.bbl
+*.bcf
+*.blg
+*-blx.aux
+*-blx.bib
+*.run.xml
+
+## Build tool auxiliary files:
+*.fdb_latexmk
+*.synctex
+*.synctex(busy)
+*.synctex.gz
+*.synctex.gz(busy)
+*.pdfsync
+
+## formula_analysis output files
+
+formula_analysis/formulas/efd
+formula_analysis/formulas/formula_list.txt
+formula_analysis/formulas/sources.txt
+formula_analysis/formulas/unrolled
+
+# Ignore large results
+attack/results/skewed_scalars.json

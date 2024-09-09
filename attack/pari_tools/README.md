@@ -15,6 +15,9 @@ Description of files:
 `dcp_glv_solver.c`
 - implementation of dcp solver for 2-dimensional scalar decomposition.
 
+`dcp_glv_solver_shamir.c`
+- implementation of dcp solver for 2-dimensional scalar decomposition for shamir's msm.
+
 `bsgs.cpp`
 - implementation of aby-step Giant-step for 2-dim scalar decomposition. Should be run from `bsgssolver.py`.
 

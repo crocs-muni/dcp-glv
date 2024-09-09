@@ -57,6 +57,10 @@ Results of this can be seen in `curves_and_formulas notebook`. Two functions are
 
 
 
+Note: results of the classification are in `results_*.zip`. It is enough to just unzip the directory `results`. Three kinds of results were collected (see the paper for explanation).
+- `results_add_mul` contain the results with assumption that zero IV add can be detected.
+- `results_mul` contain the results with assumption that only zero IV mul can be detected.
+- `results_mul` is `results_add_mul` without the filterting of trivial relations.
 
 
 

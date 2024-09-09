@@ -1,156 +1,328 @@
 """
 DCP solver
 """
-import msm
-from pari_tools.dcp_pari import dcpsolver_pari2, dcpsolver_pari4, multidcpsolver_pari2
+from sage.all import PolynomialRing, ZZ
+from pari_tools.dcp_pari import (
+    dcpsolver_pari,
+    glvdcpsolver_pari,
+    multidcpsolver_pari,
+    glvdcpmultisolver_pari,
+)
+from random import randint
+import time 
 
 
-def solve_dcp(scalar, curve):
+def solve_dcp(scalar, glv, registers, mul_lam=False):
     """
     Solves DCP for :scalar: and polynomial x1+x2+2
     The polynomial is hardcoded in the pari implementation
     Works for prime fields and quadratic fields
     """
+    curve = glv.curve
     A, B = curve.a4(), curve.a6()
     F = curve.base_field()
-    p = F.characteristic()
     P = None
-    if scalar == 0:
-        # x2 = 0
-        try:
-            P = curve.lift_x(F(-2))
-        except ValueError as e:
-            pass
-        return P
-
-    if F.degree() == 1:
-        roots = dcpsolver_pari2(p, A, B, scalar)
-        for root in [F(int(r)) for r in roots]:
-            try:
-                P = curve.lift_x(root)
-                assert P[0] + (scalar * P)[0] + 2 == 0
-            except ValueError as e:
-                continue
-    elif F.degree() == 2:
-        g = F.gen()
-        h = g.minpoly()
-        a2, a1 = list(A.polynomial())
-        b2, b1 = list(B.polynomial())
-        p2, p1 = list(h)[:2]
-        roots = dcpsolver_pari4(p, p1, p2, a1, a2, b1, b2, scalar)
-        for r in roots:
-            root = F(int(r[0])) * g + F(int(r[1]))
-            try:
-                P = curve.lift_x(root)
-                assert P[0] + (scalar * P)[0] + 2 == 0
-            except (ValueError, AssertionError) as e:
-                P = None
-                continue
-    else:
-        raise Exception("Base fields of degree >2 not implemented")
+    assert scalar != 0
+    lam, beta = (1, 1) if not mul_lam else (glv.lam, glv.beta)
+    Vpolynomials = [
+        prepare_simpleVpolynomial(polynomial, glv, registers, beta)
+        for polynomial in registers.polynomials
+    ]
+    solutions = dcpsolver_pari(glv.p, A, B, scalar, lam, Vpolynomials, registers)
+    for x, y in solutions:
+        P = curve(F(x), F(y))
+        Q = lam * scalar * P
+        assert registers.is_zero(P, Q)
     return P
 
 
-def solve_multi_dcp_pari(scalar, guess1, params):
+def solve_multi_dcp(scalar, scalar0, glv, registers, mul_lam=False):
     """
-    Solves DCP for multi :scalar: and polynomial x1+x2+2
+    Solves DCP for :scalar: and polynomial x1+x2+2
     The polynomial is hardcoded in the pari implementation
+    Works for prime fields and quadratic fields
     """
-    curve, lam, beta = params["curve"], params["lam"], params["beta"]
+    curve = glv.curve
     A, B = curve.a4(), curve.a6()
     F = curve.base_field()
-    p = F.characteristic()
     P = None
-    k1, k2 = scalar
-    if F.degree() == 1:
-        roots = multidcpsolver_pari2(p, A, B, beta, k1, k2, guess1)
-        for root in [F(int(r)) for r in roots]:
-            try:
-                # print(root,"root")
-                P = curve.lift_x(root)
-                # print(P)
-                if (beta ** (2 * (guess1 != 0))) * (P[0]) + ((k1 + k2 * lam) * P)[
-                    0
-                ] + 2 != 0:
-                    P = -P
-                assert (beta ** (2 * (guess1 != 0))) * (P[0]) + ((k1 + k2 * lam) * P)[
-                    0
-                ] + 2 == 0
-                break
-            except (ValueError, AssertionError) as e:
-                P = None
-                continue
-    return P
-
-
-def solve_multi_dcp(scalar, guess, params):
-    """
-    Solves DCP for multi :scalar: and polynomial x1+x2+2
-    The polynomial is hardcoded in the sage implementation below
-    """
-    m1, m2 = scalar
-    curve, lam, beta = params["curve"], params["lam"], params["beta"]
-
-    P = None
-    if m2 == 0:
-        mx = curve.multiplication_by_m(m1)[0]
-    else:
-        m1map = curve.multiplication_by_m(m1)
-        m2map = curve.multiplication_by_m(m2)
-        m2map = beta * m2map[0], m2map[1]
-        mx, _ = msm.symbolic_addition(m1map, m2map, curve.a4(), curve.a6())
-    numx = mx.numerator().univariate_polynomial()
-    denx = mx.denominator().univariate_polynomial()
-    x = denx.parent().gen()
-
-    if guess[1] == 0:
-        # tablepoint = (x,y) or (x,-y)
-        f = x * denx + numx + 2 * denx
-    else:
-        # tablepoint = (beta^2x,-y) or (beta^2x,y)
-        f = beta**2 * x * denx + numx + 2 * denx
-
-    for r, _ in f.roots():
-        try:
-            P = curve.lift_x(r)
-            break
-        except ValueError as e:
-            continue
-
-    return P
-
-
-def solve_multi_dcp_x(curve, beta, guess, scalar):
-    """
-    Solves DCP for multi :scalar: and polynomial x1+x2+2
-    The polynomial is hardcoded in the Sage implementation below
-    """
-    m1, m2 = scalar
-    m1x = curve.multiplication_by_m(m1, True)
-    m2x = curve.multiplication_by_m(m2, True)
-    x = m1x.parent().gens()[0]
-    if guess[1] == 0:
-        X1 = -2 - x
-    else:
-        X1 = -2 - beta**2 * x
-    X2 = m1x
-    X3 = beta * m2x
-    A, B = curve.a4(), curve.a6()
-    f = (
-        (X1 - X2) ** 2 * X3**2
-        - 2 * ((X1 + X2) * (X1 * X2 + A) + 2 * B) * X3
-        + (X1 * X2 - A) ** 2
-        - 4 * B * (X1 + X2)
+    assert scalar != 0
+    assert scalar0 != 0
+    if scalar0 == 1:
+        return solve_dcp(scalar, glv, registers, mul_lam)
+    lam, beta = (1, 1) if not mul_lam else (glv.lam, glv.beta)
+    Vpolynomials = [
+        prepare_simpleVpolynomial_multi(polynomial, glv, registers, beta)
+        for polynomial in registers.polynomials
+    ]
+    solutions = multidcpsolver_pari(
+        glv.p, A, B, scalar, scalar0, lam, Vpolynomials, registers
     )
-    fnum = f.numerator().univariate_polynomial()
-    for r, _ in fnum.roots():
-        try:
-            P = curve.lift_x(r)
-            betaP = curve(beta * P[0], P[1])
-            Q = m1 * P + m2 * betaP
-            assert P[0] + Q[0] + 2 == 0
-            break
-        except (ValueError, AssertionError):
-            continue
-
+    for x, y in solutions:
+        P = curve(F(x), F(y))
+        Q = lam * scalar * P
+        P0 = scalar0 * P
+        assert registers.is_zero(P0, Q)
     return P
+
+
+def prepare_simpleVpolynomial(polynomial, glv, registers, beta=1):
+    X1, Y1, X2, Y2, A, B = registers.all_gens
+
+    # we assume that the polynomial is only in X1,X2,A,B
+    assert set(polynomial.variables()).issubset(set([X1, X2, A, B]))
+    a4, a6 = ZZ(glv.curve.a4()), ZZ(glv.curve.a6())
+
+    x, x1, x2, n, d = PolynomialRing(ZZ, "x,x1,x2,n,d").fraction_field().gens()
+    V = x.parent()(polynomial(x1, 1, x2, 1, a4, a6))
+    V = V(x, x, beta * n / d, n, d).numerator()
+
+    # clean out the tmp variables
+    V = PolynomialRing(ZZ, "x,n,d")(V)
+    return V
+
+
+def prepare_simpleVpolynomial_multi(polynomial, glv, registers, beta=1):
+    X1, Y1, X2, Y2, A, B = registers.all_gens
+
+    # we assume that the polynomial is only in X1,X2,A,B
+    assert set(polynomial.variables()).issubset(set([X1, X2, A, B]))
+    a4, a6 = ZZ(glv.curve.a4()), ZZ(glv.curve.a6())
+
+    n0, d0, x1, x2, n, d = PolynomialRing(ZZ, "n0,d0,x1,x2,n,d").fraction_field().gens()
+    V = n0.parent()(polynomial(x1, 1, x2, 1, a4, a6))
+    V = V(n0, d0, n0 / d0, beta * n / d, n, d).numerator()
+    # clean out the tmp variables
+    V = PolynomialRing(ZZ, "n0,d0,n,d")(V)
+    return V
+
+
+def prepare_Vpolynomial(polynomial, registers, glv):
+    X1, Y1, X2, Y2, A, B = registers.all_gens
+
+    # we assume that the polynomial is only in X1,X2,A,B
+    assert set(polynomial.variables()).issubset(set([X1, X2, A, B]))
+    polynomial = polynomial(X1, Y1, X2, Y2, ZZ(glv.curve.a4()), ZZ(glv.curve.a6()))
+
+    # rename the variables to have nested rings
+    Qring = PolynomialRing(ZZ, "XQ,XQp")
+    XQ, XQp = Qring.gens()
+    Pring = PolynomialRing(Qring, "XP")
+    XP = Pring.gen()
+    f = 0
+    for e, c in polynomial.iterator_exp_coeff():
+        f += c * (XP ** e[0]) * (XQ ** e[2])
+
+    # Create symmetric polynomial
+    revf = 0
+    for monom in f.monomials():
+        coef = f.monomial_coefficient(monom)
+        revf += coef(XQp, XQ) * monom
+    symf = revf * f
+
+    # Express XQ,XQp using symmetric polynomials and substitute Seamev coefficients
+    x, qe1, qe2, x1, x2, n1, d1, n2, d2 = (
+        PolynomialRing(ZZ, "x,qe1,qe2,x1,x2,n1,d1,n2,d2").fraction_field().gens()
+    )
+    A = ZZ(glv.curve.a4())
+    B = ZZ(glv.curve.a6())
+    Qprod = XQ * XQp
+    Qsum = XQ + XQp
+    V = 0
+    for monom in symf.monomials():
+        coef = symf.monomial_coefficient(monom)
+        new_monom = 1
+        new_coef = fundamental_sym_thm(qe1, qe2, Qsum, Qprod, XQ, XQp, coef)
+        while XP.divides(monom):
+            monom //= XP
+            new_monom *= x
+        V += new_monom * new_coef
+    linear = -2 * ((x1 + x2) * (x1 * x2 + A) + 2 * B) / ((x1 - x2) ** 2)
+    constant = ((x1 * x2 - A) ** 2 - 4 * B * (x1 + x2)) / ((x1 - x2) ** 2)
+    V = V(x, -linear, constant, x1, x2, 1, 1, 1, 1).numerator()
+    V = V(x, 1, 1, n1 / d1, glv.beta * n2 / d2, 1, 1, 1, 1).numerator()  # Adding beta
+
+    # clean out the tmp variables
+    V = PolynomialRing(ZZ, "x,n1,d1,n2,d2")(V)
+
+    return V
+
+
+
+
+def prepare_Vpolynomial_multi(polynomial, registers, glv):
+    X1, Y1, X2, Y2, A, B = registers.all_gens
+
+    # we assume that the polynomial is only in X1,X2,A,B
+    assert set(polynomial.variables()).issubset(set([X1, X2, A, B]))
+    polynomial = polynomial(X1, Y1, X2, Y2, ZZ(glv.curve.a4()), ZZ(glv.curve.a6()))
+
+    # rename the variables to have nested rings
+    Qring = PolynomialRing(ZZ, "XQ,XQp")
+    XQ, XQp = Qring.gens()
+    Pring = PolynomialRing(Qring, "XP")
+    XP = Pring.gen()
+    f = 0
+    for e, c in polynomial.iterator_exp_coeff():
+        f += c * (XP ** e[0]) * (XQ ** e[2])
+
+    # Create symmetric polynomial
+    revf = 0
+    for monom in f.monomials():
+        coef = f.monomial_coefficient(monom)
+        revf += coef(XQp, XQ) * monom
+    symf = revf * f
+
+    # Express XQ,XQp using symmetric polynomials and substitute Seamev coefficients
+    x, n0, d0, qe1, qe2, x1, x2, n1, d1, n2, d2 = (
+        PolynomialRing(ZZ, "x,n0,d0,qe1,qe2,x1,x2,n1,d1,n2,d2").fraction_field().gens()
+    )
+    A = ZZ(glv.curve.a4())
+    B = ZZ(glv.curve.a6())
+    Qprod = XQ * XQp
+    Qsum = XQ + XQp
+    V = 0
+    for monom in symf.monomials():
+        coef = symf.monomial_coefficient(monom)
+        new_monom = 1
+        new_coef = fundamental_sym_thm(qe1, qe2, Qsum, Qprod, XQ, XQp, coef)
+        while XP.divides(monom):
+            monom //= XP
+            new_monom *= x
+        V += new_monom * new_coef
+    linear = -2 * ((x1 + x2) * (x1 * x2 + A) + 2 * B) / ((x1 - x2) ** 2)
+    constant = ((x1 * x2 - A) ** 2 - 4 * B * (x1 + x2)) / ((x1 - x2) ** 2)
+    V = V(x, n0, d0, -linear, constant, x1, x2, 1, 1, 1, 1).numerator()
+    V = V(
+        n0 / d0, n0, d0, 1, 1, n1 / d1, glv.beta * n2 / d2, 1, 1, 1, 1
+    ).numerator()  # Adding beta
+
+    # clean out the tmp variables
+    V = PolynomialRing(ZZ, "n0,d0,n1,d1,n2,d2")(V)
+    return V
+
+
+def fundamental_sym_thm(e1, e2, el1, el2, X2, X3, poly):
+    elf = 0
+    while poly != 0:
+        lead_exp = poly.exponents()[0]
+        lead_coef = ZZ(poly.coefficient(X2 ** lead_exp[0] * X3 ** lead_exp[1]))
+        elf += lead_coef * e2 ** lead_exp[1] * e1 ** (lead_exp[0] - lead_exp[1])
+        poly -= lead_coef * el2 ** lead_exp[1] * el1 ** (lead_exp[0] - lead_exp[1])
+    return elf
+
+
+def solve_glv_dcp_pari(glv_scalar, glv, registers):
+    """
+    Solves DCP for multi :scalar: and polynomial in registers
+    """
+    A, B = glv.curve.a4(), glv.curve.a6()
+    P = None
+    k1, k2 = glv_scalar
+    if k2 == 0:
+        assert k1 != 0
+        return solve_dcp(k1, glv, registers)
+    if k1 == 0:
+        assert k2 != 0
+        return solve_dcp(k2, glv, registers, True)
+
+    Vpolynomials = [
+        prepare_Vpolynomial(polynomial, registers, glv)
+        for polynomial in registers.polynomials
+    ]
+    solutions = glvdcpsolver_pari(glv.p, A, B, k1, glv.lam, k2, Vpolynomials, registers)
+    for x, y in solutions:
+        P = glv.curve(glv.field(x), glv.field(y))
+        Q = (k1 + k2 * glv.lam) * P
+        assert registers.is_zero(P, Q)
+        return P
+    return P
+
+
+def solve_glv_multi_dcp_pari(glv_scalar, scalar0, glv, registers):
+    # print("solving", glv_scalar,scalar0)
+    A, B = glv.curve.a4(), glv.curve.a6()
+    P = None
+    k1, k2 = glv_scalar
+    assert scalar0 != 0
+    if scalar0 == 1:
+        return solve_glv_dcp_pari(glv_scalar, glv, registers)
+    if k2 == 0:
+        assert k1 != 0
+        return solve_multi_dcp(k1, scalar0, glv, registers)
+    if k1 == 0:
+        assert k2 != 0
+        return solve_multi_dcp(k2, scalar0, glv, registers, True)
+
+    Vpolynomials = [
+        prepare_Vpolynomial_multi(polynomial, registers, glv)
+        for polynomial in registers.polynomials
+    ]
+    solutions = glvdcpmultisolver_pari(
+        glv.p, A, B, scalar0, k1, glv.lam, k2, Vpolynomials, registers
+    )
+    for x, y in solutions:
+        P = glv.curve(glv.field(x), glv.field(y))
+        Q = (k1 + k2 * glv.lam) * P
+        P0 = scalar0 * P
+        assert registers.is_zero(P0, Q)
+        return P
+    return P
+
+
+
+
+def dcp_experiment(params):
+    result = {}
+    scalar = params.secrets.k
+    Vpolynomials = [prepare_simpleVpolynomial(polynomial, params.glv, params.registers)
+        for polynomial in params.registers.polynomials
+    ]
+    time_zvp = time.time()
+    P = solve_dcp(scalar, params.glv, params.registers)
+    result["nguesses"] = int(0)
+    result["recovered"] = int(P is not None)
+    result["time_zvp"] = float(time.time() - time_zvp)
+    if P is not None:
+        result["point"] = [int(P[0]),int(P[1])]
+    else:
+        result["point"] = []
+    result["Vpoly"] = [{"degree":V.degree(),"num_monom":len(V.monomials())} for V in Vpolynomials]
+    return result
+
+def glv_dcp_experiment(params):
+    result = {}
+    scalar0 = params.secrets.k0
+    scalar1 = params.secrets.k1
+    Vpolynomials = [prepare_Vpolynomial(polynomial, params.registers, params.glv)
+        for polynomial in params.registers.polynomials
+    ]
+    time_zvp = time.time()
+    P = solve_glv_dcp_pari((scalar0, scalar1), params.glv, params.registers)
+    result["nguesses"] = int(0)
+    result["recovered"] = int(P is not None)
+    result["time_zvp"] = float(time.time() - time_zvp)
+    if P is not None:
+        result["point"] = [int(P[0]),int(P[1])]
+    else:
+        result["point"] = []
+    result["Vpoly"] = [{"degree":V.degree(),"num_monom":len(V.monomials())} for V in Vpolynomials]
+    return result
+
+
+
+def interleaving_dcp_experiment(params):
+    result = {}
+    assert params.secrets.k0 is not None
+    scalar0 = params.secrets.k0
+    scalar1 = params.secrets.k1
+    time_zvp = time.time()
+    P = solve_multi_dcp(scalar0, scalar1, params.glv, params.registers, mul_lam=True)
+    result["nguesses"] = int(0)
+    result["recovered"] = int(P is not None)
+    result["time_zvp"] = float(time.time() - time_zvp)
+    if P is not None:
+        result["point"] = [int(P[0]),int(P[1])]
+    else:
+        result["point"] = []
+    return result  
